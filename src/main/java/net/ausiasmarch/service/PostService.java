@@ -105,14 +105,15 @@ public class PostService implements ServiceInterface {
 	@Override
 	public String update() throws SQLException {
 		ResponseBean oResponseBean;
+		Gson oGson = GsonFactory.getGson();
 		HttpSession oSession = oRequest.getSession();
 		if (oSession.getAttribute("usuario") == null) {
 			oResponseBean = new ResponseBean(500, "Inicie sesión para acceder a esta función");
+			return oGson.toJson(oResponseBean);
 		}
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		Gson oGson = GsonFactory.getGson();
 		PostBean oPostBean = new PostBean();
 		String data = oRequest.getParameter("data");
 		oPostBean = oGson.fromJson(data, PostBean.class);
@@ -158,16 +159,17 @@ public class PostService implements ServiceInterface {
 	@Override
 	public String insert() throws SQLException {
 		ResponseBean oResponseBean;
+		Gson oGson = GsonFactory.getGson();
 		HttpSession oSession = oRequest.getSession();
 		if (oSession.getAttribute("usuario") == null) {
 			oResponseBean = new ResponseBean(500, "Inicie sesión para acceder a esta función");
+			return oGson.toJson(oResponseBean);
 		}
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
 		final GsonBuilder builder = new GsonBuilder();
 		builder.excludeFieldsWithoutExposeAnnotation();
-		Gson oGson = GsonFactory.getGson();
 		PostBean oPostBean = oGson.fromJson(oRequest.getParameter("data"), PostBean.class);
 		PostDao oPostDao = new PostDao(oConnection);
 		if (oPostDao.insert(oPostBean) == 0) {
@@ -189,15 +191,16 @@ public class PostService implements ServiceInterface {
 	@Override
 	public String remove() throws SQLException {
 		ResponseBean oResponseBean;
+		Gson oGson = GsonFactory.getGson();
 		HttpSession oSession = oRequest.getSession();
 		if (oSession.getAttribute("usuario") == null) {
 			oResponseBean = new ResponseBean(500, "Inicie sesión para acceder a esta función");
+			return oGson.toJson(oResponseBean);
 		}
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
 		PostDao oPostDao = new PostDao(oConnection);
-		Gson oGson = GsonFactory.getGson();
 		int id = Integer.parseInt(oRequest.getParameter("id"));
 		if (oPostDao.remove(id) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
