@@ -2,6 +2,8 @@ package net.ausiasmarch.factory;
 
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+
+import net.ausiasmarch.service.CarritoService;
 import net.ausiasmarch.service.PostService;
 import net.ausiasmarch.service.UsuarioService;
 import net.ausiasmarch.setting.ConfigurationSettings;
@@ -28,34 +30,23 @@ public class ServiceCall {
                     break;
             }
         }
-        if (ob.equalsIgnoreCase("post")) {
-            PostService oPostService = new PostService(oRequest);
+        if (ob.equalsIgnoreCase("carrito")) {
+        	CarritoService oCarritoService = new CarritoService(oRequest);
             switch (op) {
-                case "get":
-                    strResult = oPostService.get();
+                case "add":
+                    strResult = oCarritoService.add();
                     break;
-                case "getcount":
-                    strResult = oPostService.getCount();
+                case "list":
+                    strResult = oCarritoService.list();
                     break;
-                case "getpage":
-                    strResult = oPostService.getPage();
-                    break;
-                case "update":
-                    strResult = oPostService.update();
+                case "empty":
+                    strResult = oCarritoService.empty();
                     break;
                 case "remove":
-                    strResult = oPostService.remove();
+                    strResult = oCarritoService.remove();
                     break;
-                case "getall":
-                    strResult = oPostService.getAll();
-                    break;
-                case "insert":
-                    strResult = oPostService.insert();
-                    break;
-                case "fill":
-                    if (ConfigurationSettings.environment == ConfigurationSettings.EnvironmentConstans.Debug) {
-                        strResult = oPostService.fill();
-                    }
+                case "buy":
+                    strResult = "Aun por hacer :P";
                     break;
             }
         }
