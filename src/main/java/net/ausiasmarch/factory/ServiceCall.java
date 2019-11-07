@@ -4,7 +4,10 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
 import net.ausiasmarch.service.CarritoService;
+import net.ausiasmarch.service.CompraService;
 import net.ausiasmarch.service.PostService;
+import net.ausiasmarch.service.ProductoService;
+import net.ausiasmarch.service.TipoProductoService;
 import net.ausiasmarch.service.UsuarioService;
 import net.ausiasmarch.setting.ConfigurationSettings;
 
@@ -12,7 +15,7 @@ public class ServiceCall {
 
     HttpServletRequest oRequest;
 
-    public static String executeService(HttpServletRequest oRequest) throws SQLException {
+    public static String executeService(HttpServletRequest oRequest) throws Exception {
         String ob = oRequest.getParameter("ob");
         String op = oRequest.getParameter("op");
         String strResult = null;
@@ -50,6 +53,98 @@ public class ServiceCall {
                     break;
             }
         }
+        if (ob.equalsIgnoreCase("compra")) {
+        	CompraService oCompraService = new CompraService(oRequest);
+            switch (op) {
+                case "get":
+                    strResult = oCompraService.get();
+                    break;
+                case "getpage":
+                    strResult = oCompraService.getPage();
+                    break;
+                case "update":
+                    strResult = oCompraService.update();
+                    break;
+                case "getcount":
+                    strResult = oCompraService.getCount();
+                    break;
+                case "getall":
+                    strResult = oCompraService.getAll();
+                    break;
+                case "insert":
+                    strResult = oCompraService.insert();
+                    break;
+                case "remove":
+                    strResult = oCompraService.remove();
+                    break;
+                case "fill":
+                    strResult = oCompraService.fill();
+                    break;
+                   
+            }
+        }  
+        if (ob.equalsIgnoreCase("producto")) {
+        	ProductoService oProductoService = new ProductoService(oRequest);
+            switch (op) {
+                case "get":
+                    strResult = oProductoService.get();
+                    break;
+                case "getpage":
+                    strResult = oProductoService.getPage();
+                    break;
+                case "update":
+                    strResult = oProductoService.update();
+                    break;
+                case "getcount":
+                    strResult = oProductoService.getCount();
+                    break;
+                case "getall":
+                    strResult = oProductoService.getAll();
+                    break;
+                case "insert":
+                    strResult = oProductoService.insert();
+                    break;
+                case "remove":
+                    strResult = oProductoService.remove();
+                    break;
+                case "fill":
+                    strResult = oProductoService.fill();
+                    break;
+                   
+            }
+        }  
+        if (ob.equalsIgnoreCase("tipoproducto")) {
+        	TipoProductoService oTipoProductoService = new TipoProductoService(oRequest);
+            switch (op) {
+                case "get":
+                    strResult = oTipoProductoService.get();
+                    break;
+                case "getpage":
+                    strResult = oTipoProductoService.getPage();
+                    break;
+                case "update":
+                    strResult = oTipoProductoService.update();
+                    break;
+                case "getcount":
+                    strResult = oTipoProductoService.getCount();
+                    break;
+                case "getall":
+                    strResult = oTipoProductoService.getAll();
+                    break;
+                case "insert":
+                    strResult = oTipoProductoService.insert();
+                    break;
+                case "remove":
+                    strResult = oTipoProductoService.remove();
+                    break;
+                case "fill":
+                    strResult = oTipoProductoService.fill();
+                    break;
+                   
+            }
+        }  
+        
+        
         return strResult;
     }
 }

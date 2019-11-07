@@ -12,11 +12,11 @@ package net.ausiasmarch.connection;
 public class ConnectionSettings {
 
     public static String getURL() {
-        return "jdbc:mysql://localhost:3306/blogbuster";
+        return "jdbc:mysql://localhost:3306/trolleyes";
     }
 
     public static String getUsername() {
-        return "blogbuster";
+        return "trolleyes";
     }
 
     public static String getPassword() {
