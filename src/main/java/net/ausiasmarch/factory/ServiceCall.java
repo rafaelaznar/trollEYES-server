@@ -31,6 +31,30 @@ public class ServiceCall {
                 case "logout":
                     strResult = oUsuarioService.logout();
                     break;
+                case "get":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "getall":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "getcount":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "getpage":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "insert":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "update":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "remove":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "fill":
+                    strResult = "Aun por hacer :P";
+                    break;
             }
         }
         if (ob.equalsIgnoreCase("carrito")) {
@@ -141,6 +165,64 @@ public class ServiceCall {
                    
             }
         }  
+        if (ob.equalsIgnoreCase("tipousuario")) {
+        	CarritoService oCarritoService = new CarritoService(oRequest);
+            switch (op) {
+                case "get":
+                    strResult = oCarritoService.add();
+                    break;
+                case "getall":
+                    strResult = oCarritoService.list();
+                    break;
+                case "getcount":
+                    strResult = oCarritoService.empty();
+                    break;
+                case "getpage":
+                    strResult = oCarritoService.remove();
+                    break;
+                case "insert":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "update":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "remove":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "fill":
+                    strResult = "Aun por hacer :P";
+                    break;
+            }
+        }
+        if (ob.equalsIgnoreCase("factura")) {
+        	CarritoService oCarritoService = new CarritoService(oRequest);
+            switch (op) {
+                case "get":
+                    strResult = oCarritoService.add();
+                    break;
+                case "getall":
+                    strResult = oCarritoService.list();
+                    break;
+                case "getcount":
+                    strResult = oCarritoService.empty();
+                    break;
+                case "getpage":
+                    strResult = oCarritoService.remove();
+                    break;
+                case "insert":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "update":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "remove":
+                    strResult = "Aun por hacer :P";
+                    break;
+                case "fill":
+                    strResult = "Aun por hacer :P";
+                    break;
+            }
+        }
         
         
         return strResult;
