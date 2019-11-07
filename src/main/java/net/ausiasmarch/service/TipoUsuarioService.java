@@ -17,25 +17,19 @@ import javax.servlet.http.HttpSession;
 
 import net.ausiasmarch.bean.BeanInterface;
 
-import net.ausiasmarch.bean.UsuarioBean;
+import net.ausiasmarch.bean.TipoUsuarioBean;
 import net.ausiasmarch.bean.ResponseBean;
 import net.ausiasmarch.connection.ConnectionInterface;
-import net.ausiasmarch.dao.PostDao;
+import net.ausiasmarch.dao.TipoUsuarioDao;
 import net.ausiasmarch.factory.ConnectionFactory;
 import net.ausiasmarch.factory.GsonFactory;
 import net.ausiasmarch.setting.ConnectionSettings;
 
-public class PostService implements ServiceInterface {
+public class TipoUsuarioService implements ServiceInterface {
 
 	HttpServletRequest oRequest = null;
-	String[] frasesInicio = { "El fin de la estructura ", "La agrupacion logica ", "El objetivo conjunto ",
-			"Una dinámica apropiada " };
-	String[] frasesMitad = { "dirige los objetivos ", "garantiza el deseo ", "mejora la capacidad ",
-			"recupera el concepto " };
-	String[] frasesFinal = { "de la reestructuracion requerida. ", "en la aplicación. ",
-			"por sus innumerables beneficios. ", "contra la inficiencia. " };
 
-	public PostService(HttpServletRequest oRequest) {
+	public TipoUsuarioService(HttpServletRequest oRequest) {
 		this.oRequest = oRequest;
 	}
 
@@ -45,10 +39,10 @@ public class PostService implements ServiceInterface {
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
 		int id = Integer.parseInt(oRequest.getParameter("id"));
-		PostDao oPostDao = new PostDao(oConnection);
-		UsuarioBean oPostBean = oPostDao.get(id);
+		TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
+		TipoUsuarioBean oTipoUsuarioBean = oTipoUsuarioDao.get(id);
 		Gson oGson = GsonFactory.getGson();
-		String strJson = oGson.toJson(oPostBean);
+		String strJson = oGson.toJson(oTipoUsuarioBean);
 		if (oConnection != null) {
 			oConnection.close();
 		}
@@ -69,10 +63,10 @@ public class PostService implements ServiceInterface {
 		if (oRequest.getParameter("order") != null) {
 			orden = Arrays.asList(oRequest.getParameter("order").split("\\s*,\\s*"));
 		}
-		PostDao oPostDao = new PostDao(oConnection);
-		ArrayList alPostBean = oPostDao.getPage(iPage, iRpp, orden);
+		TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
+		ArrayList alTipoUsuarioBean = oTipoUsuarioDao.getPage(iPage, iRpp, orden);
 		Gson oGson = GsonFactory.getGson();
-		String strJson = oGson.toJson(alPostBean);
+		String strJson = oGson.toJson(alTipoUsuarioBean);
 		if (oConnection != null) {
 			oConnection.close();
 		}
@@ -87,8 +81,8 @@ public class PostService implements ServiceInterface {
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		PostDao oPostDao = new PostDao(oConnection);
-		int iCount = oPostDao.getCount();
+		TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
+		int iCount = oTipoUsuarioDao.getCount();
 		if (oConnection != null) {
 			oConnection.close();
 		}
@@ -114,11 +108,11 @@ public class PostService implements ServiceInterface {
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioBean oPostBean = new UsuarioBean();
+		TipoUsuarioBean oTipoUsuarioBean = new TipoUsuarioBean();
 		String data = oRequest.getParameter("data");
-		oPostBean = oGson.fromJson(data, UsuarioBean.class);
-		PostDao oPostDao = new PostDao(oConnection);
-		if (oPostDao.update(oPostBean) == 0) {
+		oTipoUsuarioBean = oGson.fromJson(data, TipoUsuarioBean.class);
+		TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
+		if (oTipoUsuarioDao.update(oTipoUsuarioBean) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
 		} else {
 			oResponseBean = new ResponseBean(200, "OK");
@@ -137,15 +131,15 @@ public class PostService implements ServiceInterface {
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		PostDao oPostDao = new PostDao(oConnection);
+		TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
 		Gson oGson = GsonFactory.getGson();
 		String message = "";
-		List<BeanInterface> listaPostBean = oPostDao.getAll();
-		if (listaPostBean == null) {
+		List<BeanInterface> listaTipoUsuarioBean = oTipoUsuarioDao.getAll();
+		if (listaTipoUsuarioBean == null) {
 			message = "\"La lista está vacia\"";
 		} else {
 			// oGson = gh.getGson();
-			message = oGson.toJson(listaPostBean);
+			message = oGson.toJson(listaTipoUsuarioBean);
 		}
 		if (oConnection != null) {
 			oConnection.close();
@@ -170,9 +164,9 @@ public class PostService implements ServiceInterface {
 		Connection oConnection = oConnectionImplementation.newConnection();
 		final GsonBuilder builder = new GsonBuilder();
 		builder.excludeFieldsWithoutExposeAnnotation();
-		UsuarioBean oPostBean = oGson.fromJson(oRequest.getParameter("data"), UsuarioBean.class);
-		PostDao oPostDao = new PostDao(oConnection);
-		if (oPostDao.insert(oPostBean) == 0) {
+		TipoUsuarioBean oTipoUsuarioBean = oGson.fromJson(oRequest.getParameter("data"), TipoUsuarioBean.class);
+		TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
+		if (oTipoUsuarioDao.insert(oTipoUsuarioBean) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
 		} else {
 			oResponseBean = new ResponseBean(200, "OK");
@@ -200,9 +194,9 @@ public class PostService implements ServiceInterface {
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		PostDao oPostDao = new PostDao(oConnection);
+		TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
 		int id = Integer.parseInt(oRequest.getParameter("id"));
-		if (oPostDao.remove(id) == 0) {
+		if (oTipoUsuarioDao.remove(id) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
 		} else {
 			oResponseBean = new ResponseBean(200, "OK");
@@ -216,41 +210,4 @@ public class PostService implements ServiceInterface {
 		return oGson.toJson(oResponseBean);
 	}
 
-	public String fill() throws SQLException {
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		PostDao oPostDao = new PostDao(oConnection);
-		Gson oGson = GsonFactory.getGson();
-		Date date1 = new GregorianCalendar(2014, Calendar.JANUARY, 1).getTime();
-		Date date2 = new GregorianCalendar(2019, Calendar.DECEMBER, 31).getTime();
-		int numPost = Integer.parseInt(oRequest.getParameter("number"));
-		for (int i = 0; i < numPost; i++) {
-			UsuarioBean oPostBean = new UsuarioBean();
-			Date randomDate = new Date(ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime()));
-			oPostBean.setTitulo(generaTexto(1));
-			oPostBean.setCuerpo(generaTexto(5));
-			oPostBean.setEtiquetas(generaTexto(1));
-			oPostBean.setFecha(randomDate);
-			oPostDao.insert(oPostBean);
-		}
-		ResponseBean oResponseBean = new ResponseBean(200, "Insertados los registros con exito");
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		return oGson.toJson(oResponseBean);
-	}
-
-	private String generaTexto(int longitud) {
-		String fraseRandom = "";
-		for (int i = 0; i < longitud; i++) {
-			fraseRandom += frasesInicio[(int) (Math.random() * frasesInicio.length) + 0];
-			fraseRandom += frasesMitad[(int) (Math.random() * frasesMitad.length) + 0];
-			fraseRandom += frasesFinal[(int) (Math.random() * frasesFinal.length) + 0];
-		}
-		return fraseRandom;
-	}
 }

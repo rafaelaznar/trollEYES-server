@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.ausiasmarch.service.CarritoService;
 import net.ausiasmarch.service.CompraService;
-import net.ausiasmarch.service.PostService;
+import net.ausiasmarch.service.FacturaService;
 import net.ausiasmarch.service.ProductoService;
 import net.ausiasmarch.service.TipoProductoService;
+import net.ausiasmarch.service.TipoUsuarioService;
 import net.ausiasmarch.service.UsuarioService;
 import net.ausiasmarch.setting.ConfigurationSettings;
 
@@ -32,28 +33,28 @@ public class ServiceCall {
                     strResult = oUsuarioService.logout();
                     break;
                 case "get":
-                    strResult = "Aun por hacer :P";
-                    break;
-                case "getall":
-                    strResult = "Aun por hacer :P";
-                    break;
-                case "getcount":
-                    strResult = "Aun por hacer :P";
+                    strResult = oUsuarioService.get();
                     break;
                 case "getpage":
-                    strResult = "Aun por hacer :P";
-                    break;
-                case "insert":
-                    strResult = "Aun por hacer :P";
+                    strResult = oUsuarioService.getPage();
                     break;
                 case "update":
-                    strResult = "Aun por hacer :P";
+                    strResult = oUsuarioService.update();
+                    break;
+                case "getcount":
+                    strResult = oUsuarioService.getCount();
+                    break;
+                case "getall":
+                    strResult = oUsuarioService.getAll();
+                    break;
+                case "insert":
+                    strResult = oUsuarioService.insert();
                     break;
                 case "remove":
-                    strResult = "Aun por hacer :P";
+                    strResult = oUsuarioService.remove();
                     break;
                 case "fill":
-                    strResult = "Aun por hacer :P";
+                    strResult = oUsuarioService.fill();
                     break;
             }
         }
@@ -166,60 +167,57 @@ public class ServiceCall {
             }
         }  
         if (ob.equalsIgnoreCase("tipousuario")) {
-        	CarritoService oCarritoService = new CarritoService(oRequest);
+        	TipoUsuarioService oTipoUsuarioService = new TipoUsuarioService(oRequest);
             switch (op) {
                 case "get":
-                    strResult = oCarritoService.add();
+                    strResult = oTipoUsuarioService.get();
                     break;
                 case "getall":
-                    strResult = oCarritoService.list();
+                    strResult = oTipoUsuarioService.getAll();
                     break;
                 case "getcount":
-                    strResult = oCarritoService.empty();
+                    strResult = oTipoUsuarioService.getCount();
                     break;
                 case "getpage":
-                    strResult = oCarritoService.remove();
+                    strResult = oTipoUsuarioService.getPage();
                     break;
                 case "insert":
-                    strResult = "Aun por hacer :P";
+                    strResult = oTipoUsuarioService.insert();
                     break;
                 case "update":
-                    strResult = "Aun por hacer :P";
+                    strResult = oTipoUsuarioService.update();
                     break;
                 case "remove":
-                    strResult = "Aun por hacer :P";
-                    break;
-                case "fill":
-                    strResult = "Aun por hacer :P";
+                    strResult = oTipoUsuarioService.remove();
                     break;
             }
         }
         if (ob.equalsIgnoreCase("factura")) {
-        	CarritoService oCarritoService = new CarritoService(oRequest);
+        	FacturaService oFacturaService = new FacturaService(oRequest);
             switch (op) {
                 case "get":
-                    strResult = oCarritoService.add();
+                    strResult = oFacturaService.get();
                     break;
                 case "getall":
-                    strResult = oCarritoService.list();
+                    strResult = oFacturaService.getAll();
                     break;
                 case "getcount":
-                    strResult = oCarritoService.empty();
+                    strResult = oFacturaService.getCount();
                     break;
                 case "getpage":
-                    strResult = oCarritoService.remove();
+                    strResult = oFacturaService.getPage();
                     break;
                 case "insert":
-                    strResult = "Aun por hacer :P";
+                    strResult = oFacturaService.insert();
                     break;
                 case "update":
-                    strResult = "Aun por hacer :P";
+                    strResult = oFacturaService.update();
                     break;
                 case "remove":
-                    strResult = "Aun por hacer :P";
+                    strResult = oFacturaService.remove();
                     break;
                 case "fill":
-                    strResult = "Aun por hacer :P";
+                    strResult = oFacturaService.fill();
                     break;
             }
         }
