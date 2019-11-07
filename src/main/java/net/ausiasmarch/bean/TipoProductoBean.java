@@ -8,7 +8,7 @@ public class TipoProductoBean implements BeanInterface {
     @Expose
     private Integer id;
     @Expose
-    private Integer cantidad;
+    private String descripcion;
 
     @Override
     public Integer getId() {
@@ -20,13 +20,15 @@ public class TipoProductoBean implements BeanInterface {
         this.id = id;
     }
 
-	public Integer getCantidad() {
-		return cantidad;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setCantidad(Integer cantidad) {
-		this.cantidad = cantidad;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
+
+
 
 
 
