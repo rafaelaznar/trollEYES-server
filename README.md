@@ -1,2 +1,2 @@
-# blogBUSTER
-La parte servidora del superblog de DAW
+# trollEYES-server
+trollEYES-server
