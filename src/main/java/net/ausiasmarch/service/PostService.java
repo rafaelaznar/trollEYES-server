@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import net.ausiasmarch.bean.BeanInterface;
 
-import net.ausiasmarch.bean.PostBean;
+import net.ausiasmarch.bean.UsuarioBean;
 import net.ausiasmarch.bean.ResponseBean;
 import net.ausiasmarch.connection.ConnectionInterface;
 import net.ausiasmarch.dao.PostDao;
@@ -46,7 +46,7 @@ public class PostService implements ServiceInterface {
 		Connection oConnection = oConnectionImplementation.newConnection();
 		int id = Integer.parseInt(oRequest.getParameter("id"));
 		PostDao oPostDao = new PostDao(oConnection);
-		PostBean oPostBean = oPostDao.get(id);
+		UsuarioBean oPostBean = oPostDao.get(id);
 		Gson oGson = GsonFactory.getGson();
 		String strJson = oGson.toJson(oPostBean);
 		if (oConnection != null) {
@@ -114,9 +114,9 @@ public class PostService implements ServiceInterface {
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		PostBean oPostBean = new PostBean();
+		UsuarioBean oPostBean = new UsuarioBean();
 		String data = oRequest.getParameter("data");
-		oPostBean = oGson.fromJson(data, PostBean.class);
+		oPostBean = oGson.fromJson(data, UsuarioBean.class);
 		PostDao oPostDao = new PostDao(oConnection);
 		if (oPostDao.update(oPostBean) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
@@ -170,7 +170,7 @@ public class PostService implements ServiceInterface {
 		Connection oConnection = oConnectionImplementation.newConnection();
 		final GsonBuilder builder = new GsonBuilder();
 		builder.excludeFieldsWithoutExposeAnnotation();
-		PostBean oPostBean = oGson.fromJson(oRequest.getParameter("data"), PostBean.class);
+		UsuarioBean oPostBean = oGson.fromJson(oRequest.getParameter("data"), UsuarioBean.class);
 		PostDao oPostDao = new PostDao(oConnection);
 		if (oPostDao.insert(oPostBean) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
@@ -226,7 +226,7 @@ public class PostService implements ServiceInterface {
 		Date date2 = new GregorianCalendar(2019, Calendar.DECEMBER, 31).getTime();
 		int numPost = Integer.parseInt(oRequest.getParameter("number"));
 		for (int i = 0; i < numPost; i++) {
-			PostBean oPostBean = new PostBean();
+			UsuarioBean oPostBean = new UsuarioBean();
 			Date randomDate = new Date(ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime()));
 			oPostBean.setTitulo(generaTexto(1));
 			oPostBean.setCuerpo(generaTexto(5));

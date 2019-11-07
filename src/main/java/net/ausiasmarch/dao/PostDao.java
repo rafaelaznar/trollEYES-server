@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import net.ausiasmarch.bean.BeanInterface;
-import net.ausiasmarch.bean.PostBean;
+import net.ausiasmarch.bean.UsuarioBean;
 
 public class PostDao implements DaoInterface {
 
@@ -20,16 +20,16 @@ public class PostDao implements DaoInterface {
     }
 
     @Override
-    public PostBean get(int id) throws SQLException {
+    public UsuarioBean get(int id) throws SQLException {
         PreparedStatement oPreparedStatement;
         ResultSet oResultSet;
         String strSQL = "SELECT * FROM post WHERE id=?";
         oPreparedStatement = oConnection.prepareStatement(strSQL);
         oPreparedStatement.setInt(1, id);
         oResultSet = oPreparedStatement.executeQuery();
-        PostBean oPostBean;
+        UsuarioBean oPostBean;
         if (oResultSet.next()) {
-            oPostBean = new PostBean();
+            oPostBean = new UsuarioBean();
             oPostBean.setId(oResultSet.getInt("id"));
             oPostBean.setTitulo(oResultSet.getString("titulo"));
             oPostBean.setCuerpo(oResultSet.getString("cuerpo"));
@@ -61,7 +61,7 @@ public class PostDao implements DaoInterface {
         String strSQL = "UPDATE post SET titulo = ?, cuerpo = ?, etiquetas = ? WHERE id = ?";
         int iResult;
         oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
-        PostBean oPostBean = (PostBean) oPostBeanParam;
+        UsuarioBean oPostBean = (UsuarioBean) oPostBeanParam;
         oPreparedStatement.setString(1, oPostBean.getTitulo());
         oPreparedStatement.setString(2, oPostBean.getCuerpo());
         oPreparedStatement.setString(3, oPostBean.getEtiquetas());
@@ -76,7 +76,7 @@ public class PostDao implements DaoInterface {
         ResultSet rs = stmt.executeQuery("SELECT * FROM post LIMIT 100");
         List<BeanInterface> listaPostBean = new ArrayList();
         while (rs.next()) {
-            PostBean oPostBean = new PostBean();
+            UsuarioBean oPostBean = new UsuarioBean();
             oPostBean.setId(rs.getInt("id"));
             oPostBean.setTitulo(rs.getString("titulo"));
             oPostBean.setCuerpo(rs.getString("cuerpo"));
@@ -92,7 +92,7 @@ public class PostDao implements DaoInterface {
         PreparedStatement oPreparedStatement;
         String strsql = "INSERT INTO post (titulo,cuerpo,etiquetas) VALUES(?,?,?)";
         oPreparedStatement = oConnection.prepareStatement(strsql);
-        PostBean oPostBean = (PostBean) oPostBeanParam;
+        UsuarioBean oPostBean = (UsuarioBean) oPostBeanParam;
         oPreparedStatement.setString(1, oPostBean.getTitulo());
         oPreparedStatement.setString(2, oPostBean.getCuerpo());
         oPreparedStatement.setString(3, oPostBean.getEtiquetas());
@@ -116,7 +116,7 @@ public class PostDao implements DaoInterface {
     }
 
     @Override
-    public ArrayList<PostBean> getPage(int page, int limit, List<String> orden) throws SQLException {
+    public ArrayList<UsuarioBean> getPage(int page, int limit, List<String> orden) throws SQLException {
 
         PreparedStatement oPreparedStatement;
         ResultSet oResultSet;
@@ -166,9 +166,9 @@ public class PostDao implements DaoInterface {
         
         oResultSet = oPreparedStatement.executeQuery();
 
-        ArrayList<PostBean> oPostBeanList = new ArrayList<>();
+        ArrayList<UsuarioBean> oPostBeanList = new ArrayList<>();
         while (oResultSet.next()) {
-            PostBean oPostBean = new PostBean();
+            UsuarioBean oPostBean = new UsuarioBean();
             oPostBean.setId(oResultSet.getInt("id"));
             oPostBean.setTitulo(oResultSet.getString("titulo"));
             oPostBean.setCuerpo(oResultSet.getString("cuerpo"));
