@@ -94,6 +94,7 @@ CREATE TABLE `usuario` (
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `apellido1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `apellido2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(512) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
