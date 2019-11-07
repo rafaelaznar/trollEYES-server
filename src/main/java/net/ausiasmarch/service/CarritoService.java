@@ -55,7 +55,8 @@ public class CarritoService {
 		}
 		oSession.setAttribute("carrito", carrito);
 
-		return "{\"status\":200,\"message\": \"Añadido con exito\"}";
+		oResponseBean = new ResponseBean(200, "Añadido con exito");
+		return oGson.toJson(oResponseBean);
 	}
 
 	public String list() throws SQLException {
@@ -72,7 +73,8 @@ public class CarritoService {
 			carrito = new ArrayList<CarritoBean>();
 		}
 
-		return "{\"status\":200,\"message\":" + carrito.toString() + "}";
+		
+		return "{\"status\":200,\"message\":" + oGson.toJson(carrito) + "}";
 	}
 
 	public String empty() throws SQLException {
@@ -85,7 +87,8 @@ public class CarritoService {
 		}
 		oSession.removeAttribute("carrito");
 
-		return "{\"status\":200,\"message\": Carrito vaciado}";
+		oResponseBean = new ResponseBean(200, "Carrito vaciado");
+		return oGson.toJson(oResponseBean);
 	}
 	
 	public String remove() throws SQLException {
@@ -109,6 +112,7 @@ public class CarritoService {
 		}
 		oSession.setAttribute("carrito", carrito);
 
-		return "{\"status\":200,\"message\": Se ha quitado el producto}";
+		oResponseBean = new ResponseBean(200, "Producto eliminado con exito");
+		return oGson.toJson(oResponseBean);
 	}
 }

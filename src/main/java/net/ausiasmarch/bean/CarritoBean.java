@@ -1,8 +1,12 @@
 package net.ausiasmarch.bean;
 
+import com.google.gson.annotations.Expose;
+
 public class CarritoBean {
 
+	@Expose
 	int producto;
+	@Expose
 	int cantidad;
 	public int getProducto() {
 		return producto;
