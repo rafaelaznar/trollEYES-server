@@ -2,6 +2,7 @@ package net.ausiasmarch.factory;
 
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+import net.ausiasmarch.service.CarritoService;
 import net.ausiasmarch.service.PostService;
 import net.ausiasmarch.service.UsuarioService;
 import net.ausiasmarch.setting.ConfigurationSettings;
@@ -25,6 +26,23 @@ public class ServiceCall {
                     break;
                 case "logout":
                     strResult = oUsuarioService.logout();
+                    break;
+            }
+        }
+        if (ob.equalsIgnoreCase("carrito")) {
+            CarritoService oCarritoService = new CarritoService(oRequest);
+            switch (op) {
+                case "add":
+                    strResult = oCarritoService.add();
+                    break;
+                case "list":
+                    strResult = oCarritoService.list();
+                    break;
+                case "remove":
+                    strResult = oCarritoService.remove();
+                    break;
+                case "empty":
+                    strResult = oCarritoService.empty();
                     break;
             }
         }

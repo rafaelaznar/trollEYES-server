@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.adisan</groupId>
-	<artifactId>blogbuster</artifactId>
+	<artifactId>trolleyes</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>blogbuster</name>
+	<name>trolleyes</name>
 
 	<properties>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
