@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import net.ausiasmarch.bean.ItemBean;
 import net.ausiasmarch.bean.ResponseBean;
 import net.ausiasmarch.connection.ConnectionInterface;
-import net.ausiasmarch.dao.PostDao;
 import net.ausiasmarch.factory.ConnectionFactory;
 import net.ausiasmarch.factory.GsonFactory;
 import net.ausiasmarch.setting.ConnectionSettings;
