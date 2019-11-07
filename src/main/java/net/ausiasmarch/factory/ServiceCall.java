@@ -137,9 +137,7 @@ public class ServiceCall {
                 case "remove":
                     strResult = oTipoProductoService.remove();
                     break;
-                case "fill":
-                    strResult = oTipoProductoService.fill();
-                    break;
+              
                    
             }
         }  

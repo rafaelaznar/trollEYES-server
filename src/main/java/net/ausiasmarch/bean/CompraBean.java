@@ -8,7 +8,7 @@ public class CompraBean implements BeanInterface {
     @Expose
     private Integer id;
     @Expose
-    private String descripcion;
+    private Integer cantidad;
 
     @Override
     public Integer getId() {
@@ -20,14 +20,15 @@ public class CompraBean implements BeanInterface {
         this.id = id;
     }
 
-	public String getDescripcion() {
-		return descripcion;
+	public Integer getCantidad() {
+		return cantidad;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
+	
 
 
 }
