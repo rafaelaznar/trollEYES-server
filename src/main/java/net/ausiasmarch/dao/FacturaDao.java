@@ -87,12 +87,12 @@ public class FacturaDao implements DaoInterface {
     public Integer insert(BeanInterface oFacturaBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement;
         String strsql = "INSERT INTO factura (fecha,iva) VALUES(?,?)";
-        oPreparedStatement = oConnection.prepareStatement(strsql);
+        oPreparedStatement = oConnection.prepareStatement(strsql);   
         FacturaBean oFacturaBean = (FacturaBean) oFacturaBeanParam;
         oPreparedStatement.setDate(1, new java.sql.Date(oFacturaBean.getFecha().getTime()));
         oPreparedStatement.setInt(2, oFacturaBean.getIva());
         int iResult = oPreparedStatement.executeUpdate();
-        return iResult;
+        return iResult; 
     }
 
     @Override

@@ -60,7 +60,7 @@ public class ProductoDao implements DaoInterface {
     @Override
     public Integer update(BeanInterface oProductBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement = null;
-        String strSQL = "UPDATE producto SET codigo = ?, existencias = ?, precio = ?, imagen = ?, descripcion = ? WHERE id = ?";
+        String strSQL = "UPDATE producto SET codigo = ?, existencias = ?, precio = ?, imagen = ?, descripcion = ?, tipo_producto_id = ? WHERE id = ?";
         int iResult;
         oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
         ProductoBean oProductoBean = (ProductoBean) oProductBeanParam;
@@ -69,7 +69,8 @@ public class ProductoDao implements DaoInterface {
         oPreparedStatement.setDouble(3, oProductoBean.getPrecio());
         oPreparedStatement.setString(4, oProductoBean.getImagen());
         oPreparedStatement.setString(5, oProductoBean.getDescripcion());
-
+        oPreparedStatement.setInt(6, oProductoBean.getTipo_producto_id());
+        
         iResult = oPreparedStatement.executeUpdate();
         return iResult;
     }
@@ -95,7 +96,7 @@ public class ProductoDao implements DaoInterface {
     @Override
     public Integer insert(BeanInterface oProductBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement;
-        String strsql = "INSERT INTO producto (codigo,existencias,precio,imagen,descripcion) VALUES(?,?,?,?,?)";
+        String strsql = "INSERT INTO producto (codigo,existencias,precio,imagen,descripcion,tipo_producto_id) VALUES(?,?,?,?,?,?)";
         oPreparedStatement = oConnection.prepareStatement(strsql);
         ProductoBean oProductoBean = (ProductoBean) oProductBeanParam;
         oPreparedStatement.setString(1, oProductoBean.getCodigo());
@@ -103,6 +104,7 @@ public class ProductoDao implements DaoInterface {
         oPreparedStatement.setDouble(3, oProductoBean.getPrecio());
         oPreparedStatement.setString(4, oProductoBean.getImagen());
         oPreparedStatement.setString(5, oProductoBean.getDescripcion());
+        oPreparedStatement.setInt(6, oProductoBean.getTipo_producto_id());
 
         int iResult = oPreparedStatement.executeUpdate();
         return iResult;
