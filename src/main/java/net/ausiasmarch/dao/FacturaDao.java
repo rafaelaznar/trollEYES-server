@@ -55,12 +55,12 @@ public class FacturaDao implements DaoInterface {
     }
 
     @Override
-    public Integer update(BeanInterface oPostBeanParam) throws SQLException {
+    public Integer update(BeanInterface oFacturaBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement = null;
         String strSQL = "UPDATE factura SET fecha = ?, iva = ? WHERE id = ?";
         int iResult;
         oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
-        FacturaBean oFacturaBean = (FacturaBean) oPostBeanParam;
+        FacturaBean oFacturaBean = (FacturaBean) oFacturaBeanParam;
         oPreparedStatement.setDate(1, (Date) oFacturaBean.getFecha());
         oPreparedStatement.setInt(2, oFacturaBean.getIva());
         oPreparedStatement.setInt(3, oFacturaBean.getId());
@@ -72,24 +72,24 @@ public class FacturaDao implements DaoInterface {
     public List<BeanInterface> getAll() throws SQLException {
         Statement stmt = oConnection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM factura LIMIT 100");
-        List<BeanInterface> listaPostBean = new ArrayList();
+        List<BeanInterface> listaFacturaBean = new ArrayList();
         while (rs.next()) {
             FacturaBean oFacturaBean = new FacturaBean();
             oFacturaBean.setId(rs.getInt("id"));
             oFacturaBean.setFecha(rs.getDate("fecha"));
             oFacturaBean.setIva(rs.getInt("iva"));
-            listaPostBean.add(oFacturaBean);        
+            listaFacturaBean.add(oFacturaBean);        
         }
-        return listaPostBean;
+        return listaFacturaBean;
     }
 
     @Override
-    public Integer insert(BeanInterface oPostBeanParam) throws SQLException {
+    public Integer insert(BeanInterface oFacturaBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement;
-        String strsql = "INSERT INTO factura (fecha,etiquetas) VALUES(?,?,?)";
+        String strsql = "INSERT INTO factura (fecha,iva) VALUES(?,?)";
         oPreparedStatement = oConnection.prepareStatement(strsql);
-        FacturaBean oFacturaBean = (FacturaBean) oPostBeanParam;
-        oPreparedStatement.setDate(1, (Date) oFacturaBean.getFecha());
+        FacturaBean oFacturaBean = (FacturaBean) oFacturaBeanParam;
+        oPreparedStatement.setDate(1, new java.sql.Date(oFacturaBean.getFecha().getTime()));
         oPreparedStatement.setInt(2, oFacturaBean.getIva());
         int iResult = oPreparedStatement.executeUpdate();
         return iResult;
@@ -156,17 +156,17 @@ public class FacturaDao implements DaoInterface {
         
         oResultSet = oPreparedStatement.executeQuery();
 
-        ArrayList<FacturaBean> oPostBeanList = new ArrayList<>();
+        ArrayList<FacturaBean> oFacturaBeanList = new ArrayList<>();
         while (oResultSet.next()) {
             FacturaBean oFacturaBean = new FacturaBean();
             oFacturaBean.setId(oResultSet.getInt("id"));
             oFacturaBean.setFecha(oResultSet.getDate("fecha"));
             oFacturaBean.setIva(oResultSet.getInt("iva"));
 
-            oPostBeanList.add(oFacturaBean);
+            oFacturaBeanList.add(oFacturaBean);
         }
 
-        return oPostBeanList;
+        return oFacturaBeanList;
     }
 
 }

@@ -59,12 +59,12 @@ public class UsuarioDao implements DaoInterface {
     }
 
     @Override
-    public Integer update(BeanInterface oPostBeanParam) throws SQLException {
+    public Integer update(BeanInterface oUsuarioBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement = null;
         String strSQL = "UPDATE usuario SET dni = ?, nombre = ?, apellido1 = ?, apellido2 = ?, email = ?, login = ?, password = ? WHERE id = ?";
         int iResult;
         oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
-        UsuarioBean oUsuarioBean = (UsuarioBean) oPostBeanParam;
+        UsuarioBean oUsuarioBean = (UsuarioBean) oUsuarioBeanParam;
         oPreparedStatement.setString(1, oUsuarioBean.getDni());
         oPreparedStatement.setString(2, oUsuarioBean.getNombre());
         oPreparedStatement.setString(3, oUsuarioBean.getApellido1());
@@ -81,7 +81,7 @@ public class UsuarioDao implements DaoInterface {
     public List<BeanInterface> getAll() throws SQLException {
         Statement stmt = oConnection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM usuario LIMIT 100");
-        List<BeanInterface> listaPostBean = new ArrayList();
+        List<BeanInterface> listaUsuarioBean = new ArrayList();
         while (rs.next()) {
             UsuarioBean oUsuarioBean = new UsuarioBean();
             oUsuarioBean.setId(rs.getInt("id"));
@@ -92,17 +92,17 @@ public class UsuarioDao implements DaoInterface {
             oUsuarioBean.setEmail(rs.getString("email"));
             oUsuarioBean.setLogin(rs.getString("login"));
             oUsuarioBean.setPassword(rs.getString("password"));
-            listaPostBean.add(oUsuarioBean);        
+            listaUsuarioBean.add(oUsuarioBean);        
         }
-        return listaPostBean;
+        return listaUsuarioBean;
     }
 
     @Override
-    public Integer insert(BeanInterface oPostBeanParam) throws SQLException {
+    public Integer insert(BeanInterface oUsuarioBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement;
         String strsql = "INSERT INTO usuario (dni,nombre,apellido1,apellido2,email,login,password) VALUES(?,?,?,?,?,?,?)";
         oPreparedStatement = oConnection.prepareStatement(strsql);
-        UsuarioBean oUsuarioBean = (UsuarioBean) oPostBeanParam;
+        UsuarioBean oUsuarioBean = (UsuarioBean) oUsuarioBeanParam;
         oPreparedStatement.setString(1, oUsuarioBean.getDni());
         oPreparedStatement.setString(2, oUsuarioBean.getNombre());
         oPreparedStatement.setString(3, oUsuarioBean.getApellido1());
@@ -185,7 +185,7 @@ public class UsuarioDao implements DaoInterface {
         
         oResultSet = oPreparedStatement.executeQuery();
 
-        ArrayList<UsuarioBean> oPostBeanList = new ArrayList<>();
+        ArrayList<UsuarioBean> oUsuarioBeanList = new ArrayList<>();
         while (oResultSet.next()) {
             UsuarioBean oUsuarioBean = new UsuarioBean();
             oUsuarioBean.setId(oResultSet.getInt("id"));
@@ -196,10 +196,10 @@ public class UsuarioDao implements DaoInterface {
             oUsuarioBean.setEmail(oResultSet.getString("email"));
             oUsuarioBean.setLogin(oResultSet.getString("login"));
             oUsuarioBean.setPassword(oResultSet.getString("password"));
-            oPostBeanList.add(oUsuarioBean);
+            oUsuarioBeanList.add(oUsuarioBean);
         }
 
-        return oPostBeanList;
+        return oUsuarioBeanList;
     }
 
 }
