@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 05-11-2019 a las 03:58:19
+-- Tiempo de generación: 08-11-2019 a las 00:43:34
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.2.22
 
@@ -30,7 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `compra` (
   `id` int(11) NOT NULL,
-  `cantidad` int(10) NOT NULL
+  `cantidad` int(10) NOT NULL,
+  `factura_id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -42,7 +44,8 @@ CREATE TABLE `compra` (
 CREATE TABLE `factura` (
   `id` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `iva` int(3) NOT NULL
+  `iva` int(3) NOT NULL,
+  `usuario_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -53,11 +56,12 @@ CREATE TABLE `factura` (
 
 CREATE TABLE `producto` (
   `id` int(11) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `existencias` int(10) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
-  `imagen` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `imagen` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `tipo_producto_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -68,7 +72,7 @@ CREATE TABLE `producto` (
 
 CREATE TABLE `tipo_producto` (
   `id` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `descripcion` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -79,8 +83,16 @@ CREATE TABLE `tipo_producto` (
 
 CREATE TABLE `tipo_usuario` (
   `id` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `descripcion` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `tipo_usuario`
+--
+
+INSERT INTO `tipo_usuario` (`id`, `descripcion`) VALUES
+(1, 'Administrador'),
+(2, 'Cliente');
 
 -- --------------------------------------------------------
 
@@ -90,13 +102,14 @@ CREATE TABLE `tipo_usuario` (
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `dni` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `apellido1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `apellido2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(512) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `dni` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `apellido1` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `apellido2` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `login` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `tipo_usuario_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -107,19 +120,23 @@ CREATE TABLE `usuario` (
 -- Indices de la tabla `compra`
 --
 ALTER TABLE `compra`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`factura_id`,`producto_id`),
+  ADD KEY `fk_compra_factura_idx` (`factura_id`),
+  ADD KEY `fk_compra_producto_idx` (`producto_id`);
 
 --
 -- Indices de la tabla `factura`
 --
 ALTER TABLE `factura`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`usuario_id`),
+  ADD KEY `fk_factura_usuario_idx` (`usuario_id`);
 
 --
 -- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`tipo_producto_id`),
+  ADD KEY `fk_producto_tipo_producto_idx` (`tipo_producto_id`);
 
 --
 -- Indices de la tabla `tipo_producto`
@@ -137,47 +154,37 @@ ALTER TABLE `tipo_usuario`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`tipo_usuario_id`),
+  ADD KEY `fk_usuario_tipo_usuario_idx` (`tipo_usuario_id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- Restricciones para tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `compra`
+-- Filtros para la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `fk_compra_factura` FOREIGN KEY (`factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_compra_producto` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
--- AUTO_INCREMENT de la tabla `factura`
+-- Filtros para la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `fk_factura_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
--- AUTO_INCREMENT de la tabla `producto`
+-- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `fk_producto_tipo_producto` FOREIGN KEY (`tipo_producto_id`) REFERENCES `tipo_producto` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
--- AUTO_INCREMENT de la tabla `tipo_producto`
---
-ALTER TABLE `tipo_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tipo_usuario`
---
-ALTER TABLE `tipo_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
+-- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `fk_usuario_tipo_usuario` FOREIGN KEY (`tipo_usuario_id`) REFERENCES `tipo_usuario` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
