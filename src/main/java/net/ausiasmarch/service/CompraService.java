@@ -233,10 +233,12 @@ public class CompraService implements ServiceInterface {
 			CompraBean oCompraBean = new CompraBean();
 //			Date randomDate = new Date(ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime()));
 		  int numAleatorio=(int)Math.floor(Math.random()*(1-50)+50);
+		  int alProducto_id = (int)Math.floor(Math.random()*25)+1;
+		  int alFactura_id = (int)Math.floor(Math.random()*25)+1;
+  
 			oCompraBean.setCantidad(numAleatorio) ;
-//			oCompraBean.setCuerpo(generaTexto(5));
-//			oPostBean.setEtiquetas(generaTexto(1));
-//			oPostBean.setFecha(randomDate);
+			oCompraBean.setProducto_id(alProducto_id);
+			oCompraBean.setFactura_id(alFactura_id);	
 			oCompraDao.insert(oCompraBean);
 		}
 		ResponseBean oResponseBean = new ResponseBean(200, "Insertados los registros con exito");

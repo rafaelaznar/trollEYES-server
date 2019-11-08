@@ -57,12 +57,14 @@ public class CompraDao implements DaoInterface {
     @Override
     public Integer update(BeanInterface oCompraBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement = null;
-        String strSQL = "UPDATE compra SET cantidad = ? WHERE id = ?";
+        String strSQL = "UPDATE compra SET cantidad = ?, producto_id=?, factura_id=? WHERE id = ?";
         int iResult;
         oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
         CompraBean oCompraBean = (CompraBean) oCompraBeanParam;
-        oPreparedStatement.setInt(1, oCompraBean.getCantidad());
-        oPreparedStatement.setInt(2, oCompraBean.getId());
+        oPreparedStatement.setInt(1, oCompraBean.getCantidad()); 
+        oPreparedStatement.setInt(2, oCompraBean.getProducto_id());
+        oPreparedStatement.setInt(3, oCompraBean.getFactura_id());
+        oPreparedStatement.setInt(4, oCompraBean.getId());
         iResult = oPreparedStatement.executeUpdate();
         return iResult;
     }
@@ -85,10 +87,12 @@ public class CompraDao implements DaoInterface {
     @Override
     public Integer insert(BeanInterface oCompraBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement;
-        String strsql = "INSERT INTO compra (cantidad) VALUES(?)";
+        String strsql = "INSERT INTO compra (cantidad,producto_id,factura_id) VALUES(?,?,?)";
         oPreparedStatement = oConnection.prepareStatement(strsql);
         CompraBean oCompraBean = (CompraBean) oCompraBeanParam;
         oPreparedStatement.setInt(1, oCompraBean.getCantidad());
+        oPreparedStatement.setInt(2, oCompraBean.getProducto_id());
+        oPreparedStatement.setInt(3, oCompraBean.getFactura_id());
 
         //oPreparedStatement.setDate(4, (Date) oPostBean.getFecha());
         int iResult = oPreparedStatement.executeUpdate();

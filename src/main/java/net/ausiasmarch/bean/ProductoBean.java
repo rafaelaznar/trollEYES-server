@@ -17,6 +17,9 @@ public class ProductoBean implements BeanInterface {
     private String imagen;
     @Expose
     private String descripcion;
+    @Expose
+    private Integer tipo_producto_id;   
+    
 
     @Override
     public Integer getId() {
@@ -66,6 +69,14 @@ public class ProductoBean implements BeanInterface {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Integer getTipo_producto_id() {
+		return tipo_producto_id;
+	}
+
+	public void setTipo_producto_id(Integer tipo_producto_id) {
+		this.tipo_producto_id = tipo_producto_id;
 	}
 
 

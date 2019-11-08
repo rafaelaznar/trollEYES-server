@@ -235,12 +235,15 @@ public class ProductoService implements ServiceInterface {
 			 double numAleatorio2 =(double)Math.random()*(0-999)+999;
 			 DecimalFormat format2 = new DecimalFormat("#,00");
 			double precioAleatorio = Double.parseDouble(format2.format(numAleatorio2));
-
+			int alTipoProducto_id = (int) Math.floor(Math.random()*12)+1;
+			
+			
 			oProductoBean.setCodigo(numAleatorio+"");
 			oProductoBean.setExistencias(numAleatorio1);
 			oProductoBean.setPrecio(precioAleatorio);
 			oProductoBean.setImagen("link a una imagen");
 			oProductoBean.setDescripcion(generaTexto(1));
+			oProductoBean.setTipo_producto_id(alTipoProducto_id);
 			oProductoDao.insert(oProductoBean);
 		}
 		ResponseBean oResponseBean = new ResponseBean(200, "Insertados los registros con exito");
