@@ -61,7 +61,7 @@ public class UsuarioDao implements DaoInterface {
     @Override
     public Integer update(BeanInterface oUsuarioBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement = null;
-        String strSQL = "UPDATE usuario SET dni = ?, nombre = ?, apellido1 = ?, apellido2 = ?, email = ?, login = ?, password = ? WHERE id = ?";
+        String strSQL = "UPDATE usuario SET dni = ?, nombre = ?, apellido1 = ?, apellido2 = ?, email = ?, login = ?, password = ?, tipo_usuario_id = ? WHERE id = ?";
         int iResult;
         oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
         UsuarioBean oUsuarioBean = (UsuarioBean) oUsuarioBeanParam;
@@ -72,7 +72,8 @@ public class UsuarioDao implements DaoInterface {
         oPreparedStatement.setString(5, oUsuarioBean.getEmail());
         oPreparedStatement.setString(6, oUsuarioBean.getLogin());
         oPreparedStatement.setString(7, oUsuarioBean.getPassword());
-        oPreparedStatement.setInt(8, oUsuarioBean.getId());
+        oPreparedStatement.setInt(8, oUsuarioBean.getTipo_usuario_id());
+        oPreparedStatement.setInt(9, oUsuarioBean.getId());
         iResult = oPreparedStatement.executeUpdate();
         return iResult;
     }
@@ -100,7 +101,7 @@ public class UsuarioDao implements DaoInterface {
     @Override
     public Integer insert(BeanInterface oUsuarioBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement;
-        String strsql = "INSERT INTO usuario (dni,nombre,apellido1,apellido2,email,login,password) VALUES(?,?,?,?,?,?,?)";
+        String strsql = "INSERT INTO usuario (dni,nombre,apellido1,apellido2,email,login,password,tipo_usuario_id) VALUES(?,?,?,?,?,?,?,?)";
         oPreparedStatement = oConnection.prepareStatement(strsql);
         UsuarioBean oUsuarioBean = (UsuarioBean) oUsuarioBeanParam;
         oPreparedStatement.setString(1, oUsuarioBean.getDni());
@@ -110,6 +111,7 @@ public class UsuarioDao implements DaoInterface {
         oPreparedStatement.setString(5, oUsuarioBean.getEmail());
         oPreparedStatement.setString(6, oUsuarioBean.getLogin());
         oPreparedStatement.setString(7, oUsuarioBean.getPassword());
+        oPreparedStatement.setInt(8, oUsuarioBean.getTipo_usuario_id());
         int iResult = oPreparedStatement.executeUpdate();
         return iResult;
     }

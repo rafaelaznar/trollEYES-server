@@ -224,6 +224,7 @@ public class FacturaService implements ServiceInterface {
 			Date randomDate = new Date(ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime()));
 			oFacturaBean.setIva(21);
 			oFacturaBean.setFecha(randomDate);
+			oFacturaBean.setUsuario_id((int) (Math.random() * 25) + 2);
 			oFacturaDao.insert(oFacturaBean);
 		}
 		ResponseBean oResponseBean = new ResponseBean(200, "Insertados los registros con exito");

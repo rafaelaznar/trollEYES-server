@@ -11,6 +11,8 @@ public class FacturaBean implements BeanInterface {
     private Date fecha;
     @Expose
     private Integer iva;
+    @Expose
+    private Integer usuario_id;
 
     @Override
     public Integer getId() {
@@ -36,6 +38,14 @@ public class FacturaBean implements BeanInterface {
 
 	public void setIva(Integer iva) {
 		this.iva = iva;
+	}
+
+	public Integer getUsuario_id() {
+		return usuario_id;
+	}
+
+	public void setUsuario_id(Integer usuario_id) {
+		this.usuario_id = usuario_id;
 	}
 
     

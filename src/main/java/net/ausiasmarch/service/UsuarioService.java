@@ -267,6 +267,7 @@ public class UsuarioService implements ServiceInterface{
 			oUsuarioBean.setEmail(nombrePersona.toLowerCase()+"@trolleyes.com");
 			oUsuarioBean.setLogin(nombrePersona);
 			oUsuarioBean.setPassword("da8ab09ab4889c6208116a675cad0b13e335943bd7fc418782d054b32fdfba04");
+			oUsuarioBean.setTipo_usuario_id(2);
 			oPostDao.insert(oUsuarioBean);
 		}
 		ResponseBean oResponseBean = new ResponseBean(200, "Insertados los registros con exito");
