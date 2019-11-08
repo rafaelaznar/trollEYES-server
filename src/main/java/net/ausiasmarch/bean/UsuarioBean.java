@@ -19,8 +19,9 @@ public class UsuarioBean implements BeanInterface {
     private String email;
     @Expose
     private String login;
-    @Expose
     private String password;
+    @Expose
+    private Integer tipo_usuario_id;
 
     @Override
     public Integer getId() {
@@ -86,6 +87,14 @@ public class UsuarioBean implements BeanInterface {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Integer getTipo_usuario_id() {
+		return tipo_usuario_id;
+	}
+
+	public void setTipo_usuario_id(Integer tipo_usuario_id) {
+		this.tipo_usuario_id = tipo_usuario_id;
 	}
 
     

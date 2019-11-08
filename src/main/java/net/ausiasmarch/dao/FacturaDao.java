@@ -57,13 +57,14 @@ public class FacturaDao implements DaoInterface {
     @Override
     public Integer update(BeanInterface oFacturaBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement = null;
-        String strSQL = "UPDATE factura SET fecha = ?, iva = ? WHERE id = ?";
+        String strSQL = "UPDATE factura SET fecha = ?, iva = ?, usuario_id= ? WHERE id = ?";
         int iResult;
         oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
         FacturaBean oFacturaBean = (FacturaBean) oFacturaBeanParam;
         oPreparedStatement.setDate(1, (Date) oFacturaBean.getFecha());
         oPreparedStatement.setInt(2, oFacturaBean.getIva());
-        oPreparedStatement.setInt(3, oFacturaBean.getId());
+        oPreparedStatement.setInt(3, oFacturaBean.getUsuario_id());
+        oPreparedStatement.setInt(4, oFacturaBean.getId());
         iResult = oPreparedStatement.executeUpdate();
         return iResult;
     }
@@ -86,11 +87,12 @@ public class FacturaDao implements DaoInterface {
     @Override
     public Integer insert(BeanInterface oFacturaBeanParam) throws SQLException {
         PreparedStatement oPreparedStatement;
-        String strsql = "INSERT INTO factura (fecha,iva) VALUES(?,?)";
+        String strsql = "INSERT INTO factura (fecha,iva, usuario_id) VALUES(?,?,?)";
         oPreparedStatement = oConnection.prepareStatement(strsql);
         FacturaBean oFacturaBean = (FacturaBean) oFacturaBeanParam;
         oPreparedStatement.setDate(1, new java.sql.Date(oFacturaBean.getFecha().getTime()));
         oPreparedStatement.setInt(2, oFacturaBean.getIva());
+        oPreparedStatement.setInt(3, oFacturaBean.getUsuario_id());
         int iResult = oPreparedStatement.executeUpdate();
         return iResult;
     }
