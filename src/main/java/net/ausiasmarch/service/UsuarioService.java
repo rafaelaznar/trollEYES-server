@@ -259,13 +259,19 @@ public class UsuarioService implements ServiceInterface{
 		int numPost = Integer.parseInt(oRequest.getParameter("number"));
 		for (int i = 0; i < numPost; i++) {
 			UsuarioBean oUsuarioBean = new UsuarioBean();
-			oUsuarioBean.setDni("41746666D");
+			oUsuarioBean.setDni((int)Math.floor(Math.random()*(10000000-99999999)+99999999)+"O");
 			String nombrePersona = nombre[(int) (Math.random() * nombre.length) + 0];
+			String apellido1Persona = apellido1[(int) (Math.random() * apellido1.length) + 0];
+			String apellido2Persona = apellido2[(int) (Math.random() * apellido2.length) + 0];
+			String username = nombrePersona.substring(0, 2).toLowerCase().trim() +
+					apellido1Persona.substring(0,2).toLowerCase().trim() +
+					apellido2Persona.substring(0, 2).toLowerCase().trim()+
+					(int)Math.floor(Math.random()*(1000-9999)+9999);
 			oUsuarioBean.setNombre(nombrePersona);
-			oUsuarioBean.setApellido1(apellido1[(int) (Math.random() * apellido1.length) + 0]);
-			oUsuarioBean.setApellido2(apellido2[(int) (Math.random() * apellido2.length) + 0]);
-			oUsuarioBean.setEmail(nombrePersona.toLowerCase()+"@trolleyes.com");
-			oUsuarioBean.setLogin(nombrePersona);
+			oUsuarioBean.setApellido1(apellido1Persona);
+			oUsuarioBean.setApellido2(apellido2Persona);
+			oUsuarioBean.setEmail(username+"@trolleyes.com");
+			oUsuarioBean.setLogin(username);
 			oUsuarioBean.setPassword("da8ab09ab4889c6208116a675cad0b13e335943bd7fc418782d054b32fdfba04");
 			oUsuarioBean.setTipo_usuario_id(2);
 			oPostDao.insert(oUsuarioBean);
