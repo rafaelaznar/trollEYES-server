@@ -1,2 +1,2 @@
-# trollEYES-server
-trollEYES-server
+# TrollEYES
+Parte servidor del TrollEYES

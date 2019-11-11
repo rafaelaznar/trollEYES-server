@@ -2,87 +2,55 @@ package net.ausiasmarch.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.ausiasmarch.bean.BeanInterface;
+
+import net.ausiasmarch.bean.ProductoBean;
 import net.ausiasmarch.bean.ResponseBean;
-import net.ausiasmarch.bean.UsuarioBean;
 import net.ausiasmarch.connection.ConnectionInterface;
-import net.ausiasmarch.dao.UsuarioDao;
+import net.ausiasmarch.dao.ProductoDao;
+import net.ausiasmarch.dao.ProductoDao;
 import net.ausiasmarch.factory.ConnectionFactory;
 import net.ausiasmarch.factory.GsonFactory;
 import net.ausiasmarch.setting.ConnectionSettings;
 
-public class UsuarioService implements ServiceInterface{
+public class ProductoService implements ServiceInterface {
 
-    HttpServletRequest oRequest = null;
-    String[] nombre = { "Marcel·li", "Pompeu", "Cirili","Paco",
-			"Josepa", "Vidal","Domènec", "Maurici","Eudald", "Miqueleta", "Bernat", "Jaumet","Pepet" };
-	String[] apellido1 = { "de Cal", "el de", "de la",
-			"dels","de Can","de les", "Ca la","Pacoco"};
-	String[] apellido2 = { "Pacoco", "Clapés",
-			"Trencapins", "Palla","Cargols","Metge","Murallot","Porrons", "Cigrons", "Llobarro", "Faves","Cebes","Freda" };
+	HttpServletRequest oRequest = null;
+	String[] frasesInicio = { "Maquina de ", "Interruptor para ", "Libro de ",
+			"Bebida de  " };
+//	String[] frasesMitad = { "dirige los objetivos ", "garantiza el deseo ", "mejora la capacidad ",
+//			"recupera el concepto " };
+	String[] frasesFinal = { "emparejar. ", "montar tubos. ",
+			"manzana. ", "dientes. " };
 
-    public UsuarioService(HttpServletRequest oRequest) {
-        this.oRequest = oRequest;
-    }
+	public ProductoService(HttpServletRequest oRequest) {
+		this.oRequest = oRequest;
+	}
 
-    public String login() {
-        HttpSession oSession = oRequest.getSession();
-        ResponseBean oResponseBean = null;
-        if (oRequest.getParameter("username").equals("rafa") && oRequest.getParameter("password").equalsIgnoreCase("bitnami")) {
-            oSession.setAttribute("usuario", oRequest.getParameter("username"));
-            oResponseBean = new ResponseBean(200, "Welcome");
-        } else {
-            oResponseBean = new ResponseBean(500, "Wrong password");
-        }
-        Gson oGson = GsonFactory.getGson();
-        return oGson.toJson(oResponseBean);
-    }
-
-    public String check() {
-        HttpSession oSession = oRequest.getSession();
-        ResponseBean oResponseBean = null;
-        if (oSession.getAttribute("usuario") != null) {
-            oResponseBean = new ResponseBean(200, (String) oSession.getAttribute("usuario"));
-        } else {
-            oResponseBean = new ResponseBean(500, "No active session");
-        }
-        Gson oGson = GsonFactory.getGson();
-        return oGson.toJson(oResponseBean);
-    }
-
-    public String logout() {
-        HttpSession oSession = oRequest.getSession();
-        oSession.invalidate();
-        ResponseBean oResponseBean = null;
-        oResponseBean = new ResponseBean(200, "No active session");
-        Gson oGson = GsonFactory.getGson();
-        return oGson.toJson(oResponseBean);
-    }
-    
-    @Override
+	@Override
 	public String get() throws SQLException {
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
 		int id = Integer.parseInt(oRequest.getParameter("id"));
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
-		UsuarioBean oUsuarioBean = oPostDao.get(id);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
+		ProductoBean oProductoBean = oProductoDao.get(id);
 		Gson oGson = GsonFactory.getGson();
-		String strJson = oGson.toJson(oUsuarioBean);
+		String strJson = oGson.toJson(oProductoBean);
 		if (oConnection != null) {
 			oConnection.close();
 		}
@@ -103,10 +71,10 @@ public class UsuarioService implements ServiceInterface{
 		if (oRequest.getParameter("order") != null) {
 			orden = Arrays.asList(oRequest.getParameter("order").split("\\s*,\\s*"));
 		}
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
-		ArrayList alPostBean = oPostDao.getPage(iPage, iRpp, orden);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
+		ArrayList alProductoBean = oProductoDao.getPage(iPage, iRpp, orden);
 		Gson oGson = GsonFactory.getGson();
-		String strJson = oGson.toJson(alPostBean);
+		String strJson = oGson.toJson(alProductoBean);
 		if (oConnection != null) {
 			oConnection.close();
 		}
@@ -121,8 +89,8 @@ public class UsuarioService implements ServiceInterface{
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
-		int iCount = oPostDao.getCount();
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
+		int iCount = oProductoDao.getCount();
 		if (oConnection != null) {
 			oConnection.close();
 		}
@@ -148,11 +116,11 @@ public class UsuarioService implements ServiceInterface{
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioBean oUsuarioBean = new UsuarioBean();
+		ProductoBean oProductoBean = new ProductoBean();
 		String data = oRequest.getParameter("data");
-		oUsuarioBean = oGson.fromJson(data, UsuarioBean.class);
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
-		if (oPostDao.update(oUsuarioBean) == 0) {
+		oProductoBean = oGson.fromJson(data, ProductoBean.class);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
+		if (oProductoDao.update(oProductoBean) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
 		} else {
 			oResponseBean = new ResponseBean(200, "OK");
@@ -171,15 +139,15 @@ public class UsuarioService implements ServiceInterface{
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
 		Gson oGson = GsonFactory.getGson();
 		String message = "";
-		List<BeanInterface> listaPostBean = oPostDao.getAll();
-		if (listaPostBean == null) {
+		List<BeanInterface> listaProductoBean = oProductoDao.getAll();
+		if (listaProductoBean == null) {
 			message = "\"La lista está vacia\"";
 		} else {
 			// oGson = gh.getGson();
-			message = oGson.toJson(listaPostBean);
+			message = oGson.toJson(listaProductoBean);
 		}
 		if (oConnection != null) {
 			oConnection.close();
@@ -204,9 +172,9 @@ public class UsuarioService implements ServiceInterface{
 		Connection oConnection = oConnectionImplementation.newConnection();
 		final GsonBuilder builder = new GsonBuilder();
 		builder.excludeFieldsWithoutExposeAnnotation();
-		UsuarioBean oUsuarioBean = oGson.fromJson(oRequest.getParameter("data"), UsuarioBean.class);
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
-		if (oPostDao.insert(oUsuarioBean) == 0) {
+		ProductoBean oProductoBean = oGson.fromJson(oRequest.getParameter("data"), ProductoBean.class);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
+		if (oProductoDao.insert(oProductoBean) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
 		} else {
 			oResponseBean = new ResponseBean(200, "OK");
@@ -234,9 +202,9 @@ public class UsuarioService implements ServiceInterface{
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
 		int id = Integer.parseInt(oRequest.getParameter("id"));
-		if (oPostDao.remove(id) == 0) {
+		if (oProductoDao.remove(id) == 0) {
 			oResponseBean = new ResponseBean(500, "KO");
 		} else {
 			oResponseBean = new ResponseBean(200, "OK");
@@ -254,27 +222,29 @@ public class UsuarioService implements ServiceInterface{
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oPostDao = new UsuarioDao(oConnection);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
 		Gson oGson = GsonFactory.getGson();
-		int numPost = Integer.parseInt(oRequest.getParameter("number"));
-		for (int i = 0; i < numPost; i++) {
-			UsuarioBean oUsuarioBean = new UsuarioBean();
-			oUsuarioBean.setDni((int)Math.floor(Math.random()*(10000000-99999999)+99999999)+"O");
-			String nombrePersona = nombre[(int) (Math.random() * nombre.length) + 0];
-			String apellido1Persona = apellido1[(int) (Math.random() * apellido1.length) + 0];
-			String apellido2Persona = apellido2[(int) (Math.random() * apellido2.length) + 0];
-			String username = nombrePersona.substring(0, 2).toLowerCase().trim() +
-					apellido1Persona.substring(0,2).toLowerCase().trim() +
-					apellido2Persona.substring(0, 2).toLowerCase().trim()+
-					(int)Math.floor(Math.random()*(1000-9999)+9999);
-			oUsuarioBean.setNombre(nombrePersona);
-			oUsuarioBean.setApellido1(apellido1Persona);
-			oUsuarioBean.setApellido2(apellido2Persona);
-			oUsuarioBean.setEmail(username+"@trolleyes.com");
-			oUsuarioBean.setLogin(username);
-			oUsuarioBean.setPassword("da8ab09ab4889c6208116a675cad0b13e335943bd7fc418782d054b32fdfba04");
-			oUsuarioBean.setTipo_usuario_id(2);
-			oPostDao.insert(oUsuarioBean);
+//		Date date1 = new GregorianCalendar(2014, Calendar.JANUARY, 1).getTime();
+//		Date date2 = new GregorianCalendar(2019, Calendar.DECEMBER, 31).getTime();
+		int numProd = Integer.parseInt(oRequest.getParameter("number"));
+		for (int i = 0; i < numProd; i++) {
+			ProductoBean oProductoBean = new ProductoBean();
+//			Date randomDate = new Date(ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime()));
+			 int numAleatorio=(int)Math.floor(Math.random()*(100000-999999)+999999);
+			 int numAleatorio1=(int)Math.floor(Math.random()*(0-999)+999);
+			 double numAleatorio2 =(double)Math.random()*(0-999)+999;
+			 DecimalFormat format2 = new DecimalFormat("#,00");
+			double precioAleatorio = Double.parseDouble(format2.format(numAleatorio2));
+			int alTipoProducto_id = (int) Math.floor(Math.random()*12)+1;
+			
+			
+			oProductoBean.setCodigo(numAleatorio+"");
+			oProductoBean.setExistencias(numAleatorio1);
+			oProductoBean.setPrecio(precioAleatorio);
+			oProductoBean.setImagen("link a una imagen");
+			oProductoBean.setDescripcion(generaTexto(1));
+			oProductoBean.setTipo_producto_id(alTipoProducto_id);
+			oProductoDao.insert(oProductoBean);
 		}
 		ResponseBean oResponseBean = new ResponseBean(200, "Insertados los registros con exito");
 		if (oConnection != null) {
@@ -286,4 +256,13 @@ public class UsuarioService implements ServiceInterface{
 		return oGson.toJson(oResponseBean);
 	}
 
+	private String generaTexto(int longitud) {
+		String fraseRandom = "";
+		for (int i = 0; i < longitud; i++) {
+			fraseRandom += frasesInicio[(int) (Math.random() * frasesInicio.length) + 0];
+//			fraseRandom += frasesMitad[(int) (Math.random() * frasesMitad.length) + 0];
+			fraseRandom += frasesFinal[(int) (Math.random() * frasesFinal.length) + 0];
+		}
+		return fraseRandom;
+	}
 }

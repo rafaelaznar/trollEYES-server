@@ -33,8 +33,8 @@ public class Json extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
                 out.println("<!DOCTYPE html>");
-                out.println("<html><head><title>BlogBuster</title></head><body>");
-                out.println("<h1>Bienvenidos al servidor WEB BlogBuster</h1>");
+                out.println("<html><head><title>TrollEyes</title></head><body>");
+                out.println("<h1>Bienvenidos al servidor WEB TrollEyes</h1>");
                 ConnectionInterface oConnectionImplementation = null;
                 Connection oConnection = null;
                 try {
