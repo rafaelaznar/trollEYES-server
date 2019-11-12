@@ -115,15 +115,21 @@ public class GenericDao implements DaoInterface {
     }
 
     @Override
-    public Integer insert(BeanInterface oBean) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Integer insert(BeanInterface oBeanParam) throws SQLException {
+    	BeanInterface oBean = BeanFactory.getBean(ob);
+    	PreparedStatement oPreparedStatement;
+        String strsql = "INSERT INTO "+ob + oBean.getFieldInsert();
+        oPreparedStatement = oConnection.prepareStatement(strsql);
+        oPreparedStatement = oBean.setFieldInsert(oBeanParam, oPreparedStatement);
+        int iResult = oPreparedStatement.executeUpdate();
+        return iResult;
     }
 
     @Override
     public Integer remove(int id) throws SQLException {
     	 PreparedStatement oPreparedStament = null;
          int iResult;
-         String strSQL = "DELETE FROM "+ob+ "WHERE id=?";
+         String strSQL = "DELETE FROM "+ob+ " WHERE id=?";
          oPreparedStament = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
          oPreparedStament.setInt(1, id);
          iResult = oPreparedStament.executeUpdate();
@@ -132,8 +138,15 @@ public class GenericDao implements DaoInterface {
     
 
     @Override
-    public Integer update(BeanInterface oBean) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Integer update(BeanInterface oBeanParam) throws SQLException {
+    	BeanInterface oBean = BeanFactory.getBean(ob);
+    	PreparedStatement oPreparedStatement = null;
+        String strSQL = "UPDATE " +ob+ " SET "+oBean.getFieldUpdate()+" WHERE id = ?";
+        int iResult;
+        oPreparedStatement = oConnection.prepareStatement(strSQL, Statement.RETURN_GENERATED_KEYS);
+        oPreparedStatement = oBean.setFieldUpdate(oBeanParam, oPreparedStatement);
+        iResult = oPreparedStatement.executeUpdate();
+        return iResult;
     }
 
 }
