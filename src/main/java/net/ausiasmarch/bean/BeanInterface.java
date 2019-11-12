@@ -1,7 +1,10 @@
 package net.ausiasmarch.bean;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface BeanInterface {
 
@@ -9,6 +12,7 @@ public interface BeanInterface {
 
     void setId(Integer id);
 
-    public ProductoBean fill(ResultSet oResultSet) throws SQLException;
-
+    public BeanInterface fill(ResultSet oResultSet) throws SQLException;
+    
+    public PreparedStatement orderSQL(List<String> orden, PreparedStatement oPreparedStatement) throws SQLException;
 }
