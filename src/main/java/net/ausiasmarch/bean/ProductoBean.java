@@ -1,9 +1,11 @@
 package net.ausiasmarch.bean;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import net.ausiasmarch.factory.GsonFactory;
 
 public class ProductoBean implements BeanInterface {
 
@@ -90,4 +92,9 @@ public class ProductoBean implements BeanInterface {
         return this;
     }
 
+
+
+    
+    
+    
 }
