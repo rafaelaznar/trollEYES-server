@@ -30,13 +30,7 @@ public class ProductoDao implements DaoInterface {
         ProductoBean oProductoBean;
         if (oResultSet.next()) {
             oProductoBean = new ProductoBean();
-            oProductoBean.setId(oResultSet.getInt("id"));
-            oProductoBean.setCodigo(oResultSet.getString("codigo"));
-            oProductoBean.setExistencias(oResultSet.getInt("existencias"));
-            oProductoBean.setPrecio(oResultSet.getDouble("precio"));
-            oProductoBean.setImagen(oResultSet.getString("imagen"));
-            oProductoBean.setDescripcion(oResultSet.getString("descripcion"));
-
+            oProductoBean = oProductoBean.fill(oResultSet);
         } else {
             oProductoBean = null;
         }
@@ -70,7 +64,7 @@ public class ProductoDao implements DaoInterface {
         oPreparedStatement.setString(4, oProductoBean.getImagen());
         oPreparedStatement.setString(5, oProductoBean.getDescripcion());
         oPreparedStatement.setInt(6, oProductoBean.getTipo_producto_id());
-        
+
         iResult = oPreparedStatement.executeUpdate();
         return iResult;
     }
@@ -85,10 +79,10 @@ public class ProductoDao implements DaoInterface {
             oProductoBean.setId(rs.getInt("id"));
             oProductoBean.setCodigo(rs.getString("codigo"));
             oProductoBean.setExistencias(rs.getInt("existencias"));
-            oProductoBean.setPrecio(rs.getDouble("precio"));          
+            oProductoBean.setPrecio(rs.getDouble("precio"));
             oProductoBean.setImagen(rs.getString("imagen"));
-            oProductoBean.setDescripcion(rs.getString("descripcion"));          
-            listaProductoBean.add(oProductoBean);        
+            oProductoBean.setDescripcion(rs.getString("descripcion"));
+            listaProductoBean.add(oProductoBean);
         }
         return listaProductoBean;
     }
@@ -138,42 +132,42 @@ public class ProductoDao implements DaoInterface {
         }
 
         if (orden == null) {
-        	oPreparedStatement = oConnection.prepareStatement("SELECT * FROM producto LIMIT ? OFFSET ?");
-        	oPreparedStatement.setInt(1, limit);
+            oPreparedStatement = oConnection.prepareStatement("SELECT * FROM producto LIMIT ? OFFSET ?");
+            oPreparedStatement.setInt(1, limit);
             oPreparedStatement.setInt(2, offset);
         } else {
-        	String sqlQuery = "SELECT * FROM producto ";
-        	sqlQuery += "ORDER BY ";
-        	for (int i = 1; i <= orden.size(); i++) {
-        		if (orden.get((i-1)).equalsIgnoreCase("asc")) {
-        			sqlQuery += "ASC ";
-        		} else if (orden.get((i-1)).equalsIgnoreCase("desc")) {
-        			sqlQuery += "DESC ";
-        		} else {
-        			sqlQuery += "? ";
-        		}
-        	}
-        	sqlQuery += "LIMIT ? OFFSET ?";
-        	oPreparedStatement = oConnection.prepareStatement(sqlQuery);
-        	for (int i = 1; i < orden.size(); i++) {
-        		if (orden.get((i-1)).equalsIgnoreCase("id")) {
-        			oPreparedStatement.setInt(i, 1);
-        		} else if (orden.get((i-1)).equalsIgnoreCase("codigo")) {
-        			oPreparedStatement.setInt(i, 2);
-        		} else if (orden.get((i-1)).equalsIgnoreCase("existencias")) {
-        			oPreparedStatement.setInt(i, 3);
-        		} else if (orden.get((i-1)).equalsIgnoreCase("precio")) {
-        			oPreparedStatement.setInt(i, 4);
-        		} else if (orden.get((i-1)).equalsIgnoreCase("imagen")) {
-        			oPreparedStatement.setInt(i, 5);
-        		}else if (orden.get((i-1)).equalsIgnoreCase("descripcion")) {
-        			oPreparedStatement.setInt(i, 6);
-        		}
-        	}
-        	oPreparedStatement.setInt((orden.size()), limit);
-            oPreparedStatement.setInt((orden.size()+1), offset);
+            String sqlQuery = "SELECT * FROM producto ";
+            sqlQuery += "ORDER BY ";
+            for (int i = 1; i <= orden.size(); i++) {
+                if (orden.get((i - 1)).equalsIgnoreCase("asc")) {
+                    sqlQuery += "ASC ";
+                } else if (orden.get((i - 1)).equalsIgnoreCase("desc")) {
+                    sqlQuery += "DESC ";
+                } else {
+                    sqlQuery += "? ";
+                }
+            }
+            sqlQuery += "LIMIT ? OFFSET ?";
+            oPreparedStatement = oConnection.prepareStatement(sqlQuery);
+            for (int i = 1; i < orden.size(); i++) {
+                if (orden.get((i - 1)).equalsIgnoreCase("id")) {
+                    oPreparedStatement.setInt(i, 1);
+                } else if (orden.get((i - 1)).equalsIgnoreCase("codigo")) {
+                    oPreparedStatement.setInt(i, 2);
+                } else if (orden.get((i - 1)).equalsIgnoreCase("existencias")) {
+                    oPreparedStatement.setInt(i, 3);
+                } else if (orden.get((i - 1)).equalsIgnoreCase("precio")) {
+                    oPreparedStatement.setInt(i, 4);
+                } else if (orden.get((i - 1)).equalsIgnoreCase("imagen")) {
+                    oPreparedStatement.setInt(i, 5);
+                } else if (orden.get((i - 1)).equalsIgnoreCase("descripcion")) {
+                    oPreparedStatement.setInt(i, 6);
+                }
+            }
+            oPreparedStatement.setInt((orden.size()), limit);
+            oPreparedStatement.setInt((orden.size() + 1), offset);
         }
-        
+
         oResultSet = oPreparedStatement.executeQuery();
 
         ArrayList<ProductoBean> oProductoBeanList = new ArrayList<>();
@@ -192,5 +186,4 @@ public class ProductoDao implements DaoInterface {
         return oProductoBeanList;
     }
 
-    }
-
+}

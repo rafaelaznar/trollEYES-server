@@ -1,6 +1,8 @@
 package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class UsuarioBean implements BeanInterface {
@@ -96,6 +98,11 @@ public class UsuarioBean implements BeanInterface {
 	public void setTipo_usuario_id(Integer tipo_usuario_id) {
 		this.tipo_usuario_id = tipo_usuario_id;
 	}
+
+    @Override
+    public ProductoBean fill(ResultSet oResultSet) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
 

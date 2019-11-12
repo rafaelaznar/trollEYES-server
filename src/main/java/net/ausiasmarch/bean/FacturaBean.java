@@ -1,6 +1,8 @@
 package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class FacturaBean implements BeanInterface {
@@ -47,6 +49,11 @@ public class FacturaBean implements BeanInterface {
 	public void setUsuario_id(Integer usuario_id) {
 		this.usuario_id = usuario_id;
 	}
+
+    @Override
+    public ProductoBean fill(ResultSet oResultSet) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
 
