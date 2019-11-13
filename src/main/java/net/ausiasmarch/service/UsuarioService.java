@@ -15,9 +15,6 @@ import net.ausiasmarch.setting.ConnectionSettings;
 
 public class UsuarioService extends GenericService{
 
-    
-
-	HttpServletRequest oRequest = null;
     String[] nombre = { "Marcel·li", "Pompeu", "Cirili","Paco",
 			"Josepa", "Vidal","Domènec", "Maurici","Eudald", "Miqueleta", "Bernat", "Jaumet","Pepet" };
 	String[] apellido1 = { "de Cal", "el de", "de la",

@@ -15,10 +15,6 @@ import net.ausiasmarch.setting.ConnectionSettings;
 
 public class ProductoService extends GenericService implements ServiceInterface {
 
-
-
-	HttpServletRequest oRequest = null;
-
 	String[] frasesInicio = { "Maquina de ", "Interruptor para ", "Libro de ", "Bebida de  " };
 	String[] frasesFinal = { "emparejar. ", "montar tubos. ", "manzana. ", "dientes. " };
 

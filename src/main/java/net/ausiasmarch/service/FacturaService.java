@@ -18,9 +18,6 @@ import net.ausiasmarch.setting.ConnectionSettings;
 
 public class FacturaService extends GenericService {
 
-	
-	HttpServletRequest oRequest = null;
-
 	public FacturaService(HttpServletRequest oRequest) {
 		super(oRequest);
 	}
