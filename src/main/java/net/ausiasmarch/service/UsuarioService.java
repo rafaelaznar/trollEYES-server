@@ -1,22 +1,10 @@
 package net.ausiasmarch.service;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import net.ausiasmarch.bean.BeanInterface;
 import net.ausiasmarch.bean.ResponseBean;
 import net.ausiasmarch.bean.UsuarioBean;
 import net.ausiasmarch.connection.ConnectionInterface;
@@ -25,9 +13,11 @@ import net.ausiasmarch.factory.ConnectionFactory;
 import net.ausiasmarch.factory.GsonFactory;
 import net.ausiasmarch.setting.ConnectionSettings;
 
-public class UsuarioService implements ServiceInterface{
+public class UsuarioService extends GenericService{
 
-    HttpServletRequest oRequest = null;
+    
+
+	HttpServletRequest oRequest = null;
     String[] nombre = { "Marcel·li", "Pompeu", "Cirili","Paco",
 			"Josepa", "Vidal","Domènec", "Maurici","Eudald", "Miqueleta", "Bernat", "Jaumet","Pepet" };
 	String[] apellido1 = { "de Cal", "el de", "de la",
@@ -35,9 +25,9 @@ public class UsuarioService implements ServiceInterface{
 	String[] apellido2 = { "Pacoco", "Clapés",
 			"Trencapins", "Palla","Cargols","Metge","Murallot","Porrons", "Cigrons", "Llobarro", "Faves","Cebes","Freda" };
 
-    public UsuarioService(HttpServletRequest oRequest) {
-        this.oRequest = oRequest;
-    }
+	public UsuarioService(HttpServletRequest oRequest) {
+		super(oRequest);
+	}
 
     public String login() {
         HttpSession oSession = oRequest.getSession();
@@ -73,188 +63,11 @@ public class UsuarioService implements ServiceInterface{
         return oGson.toJson(oResponseBean);
     }
     
-    @Override
-	public String get() throws SQLException {
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		int id = Integer.parseInt(oRequest.getParameter("id"));
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-		UsuarioBean oUsuarioBean = oUsuarioDao.get(id);
-		Gson oGson = GsonFactory.getGson();
-		String strJson = oGson.toJson(oUsuarioBean);
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		return "{\"status\":200,\"message\":" + strJson + "}";
-	}
-
-	@Override
-	public String getPage() throws SQLException {
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		int iRpp = Integer.parseInt(oRequest.getParameter("rpp"));
-		int iPage = Integer.parseInt(oRequest.getParameter("page"));
-		List<String> orden = null;
-		if (oRequest.getParameter("order") != null) {
-			orden = Arrays.asList(oRequest.getParameter("order").split("\\s*,\\s*"));
-		}
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-		ArrayList alUsuarioBean = oUsuarioDao.getPage(iPage, iRpp, orden);
-		Gson oGson = GsonFactory.getGson();
-		String strJson = oGson.toJson(alUsuarioBean);
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		return "{\"status\":200,\"message\":" + strJson + "}";
-	}
-
-	@Override
-	public String getCount() throws SQLException {
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-		int iCount = oUsuarioDao.getCount();
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		if (iCount < 0) {
-			return "{\"status\":500,\"message\":" + iCount + "}";
-		} else {
-			return "{\"status\":200,\"message\":" + iCount + "}";
-		}
-	}
-
-	@Override
-	public String update() throws SQLException {
-		ResponseBean oResponseBean;
-		Gson oGson = GsonFactory.getGson();
-		HttpSession oSession = oRequest.getSession();
-		if (oSession.getAttribute("usuario") == null) {
-			oResponseBean = new ResponseBean(500, "Inicie sesión para acceder a esta función");
-			return oGson.toJson(oResponseBean);
-		}
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioBean oUsuarioBean = new UsuarioBean();
-		String data = oRequest.getParameter("data");
-		oUsuarioBean = oGson.fromJson(data, UsuarioBean.class);
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-		if (oUsuarioDao.update(oUsuarioBean) == 0) {
-			oResponseBean = new ResponseBean(500, "KO");
-		} else {
-			oResponseBean = new ResponseBean(200, "OK");
-		}
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		return oGson.toJson(oResponseBean);
-	}
-
-	@Override
-	public String getAll() throws SQLException {
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-		Gson oGson = GsonFactory.getGson();
-		String message = "";
-		List<BeanInterface> listaUsuarioBean = oUsuarioDao.getAll();
-		if (listaUsuarioBean == null) {
-			message = "\"La lista está vacia\"";
-		} else {
-			// oGson = gh.getGson();
-			message = oGson.toJson(listaUsuarioBean);
-		}
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		return "{\"status\":200,\"message\":" + message + "}";
-	}
-
-	@Override
-	public String insert() throws SQLException {
-		ResponseBean oResponseBean;
-		Gson oGson = GsonFactory.getGson();
-		HttpSession oSession = oRequest.getSession();
-		if (oSession.getAttribute("usuario") == null) {
-			oResponseBean = new ResponseBean(500, "Inicie sesión para acceder a esta función");
-			return oGson.toJson(oResponseBean);
-		}
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		final GsonBuilder builder = new GsonBuilder();
-		builder.excludeFieldsWithoutExposeAnnotation();
-		UsuarioBean oUsuarioBean = oGson.fromJson(oRequest.getParameter("data"), UsuarioBean.class);
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-		if (oUsuarioDao.insert(oUsuarioBean) == 0) {
-			oResponseBean = new ResponseBean(500, "KO");
-		} else {
-			oResponseBean = new ResponseBean(200, "OK");
-		}
-		;
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		return oGson.toJson(oResponseBean);
-
-	}
-
-	@Override
-	public String remove() throws SQLException {
-		ResponseBean oResponseBean;
-		Gson oGson = GsonFactory.getGson();
-		HttpSession oSession = oRequest.getSession();
-		if (oSession.getAttribute("usuario") == null) {
-			oResponseBean = new ResponseBean(500, "Inicie sesión para acceder a esta función");
-			return oGson.toJson(oResponseBean);
-		}
-		ConnectionInterface oConnectionImplementation = ConnectionFactory
-				.getConnection(ConnectionSettings.connectionPool);
-		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-		int id = Integer.parseInt(oRequest.getParameter("id"));
-		if (oUsuarioDao.remove(id) == 0) {
-			oResponseBean = new ResponseBean(500, "KO");
-		} else {
-			oResponseBean = new ResponseBean(200, "OK");
-		}
-		if (oConnection != null) {
-			oConnection.close();
-		}
-		if (oConnectionImplementation != null) {
-			oConnectionImplementation.disposeConnection();
-		}
-		return oGson.toJson(oResponseBean);
-	}
-
 	public String fill() throws SQLException {
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
+		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob);
 		Gson oGson = GsonFactory.getGson();
 		int numUsuario = Integer.parseInt(oRequest.getParameter("number"));
 		for (int i = 0; i < numUsuario; i++) {

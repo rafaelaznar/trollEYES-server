@@ -1,11 +1,9 @@
 package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 public class TipoProductoBean implements BeanInterface {

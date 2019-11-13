@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import net.ausiasmarch.bean.BeanInterface;
-import net.ausiasmarch.bean.ProductoBean;
 import net.ausiasmarch.factory.BeanFactory;
 
 public class GenericDao implements DaoInterface {
@@ -43,7 +42,7 @@ public class GenericDao implements DaoInterface {
     public List<BeanInterface> getAll() throws SQLException {
     	Statement stmt = oConnection.createStatement();
         ResultSet oResultSet = stmt.executeQuery("SELECT * FROM producto LIMIT 100");
-        List<BeanInterface> listaBean = new ArrayList();
+        List<BeanInterface> listaBean = new ArrayList<BeanInterface>();
         while (oResultSet.next()) {
         	BeanInterface oBean = BeanFactory.getBean(ob);
             oBean = oBean.fill(oResultSet);
