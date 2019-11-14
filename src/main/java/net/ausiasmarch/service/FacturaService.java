@@ -21,12 +21,11 @@ public class FacturaService extends GenericService {
     public FacturaService(HttpServletRequest oRequest) {
         super(oRequest);
     }
-
     public String fill() throws SQLException {
         ConnectionInterface oConnectionImplementation = ConnectionFactory
                 .getConnection(ConnectionSettings.connectionPool);
         Connection oConnection = oConnectionImplementation.newConnection();
-        FacturaDao oFacturaDao = new FacturaDao(oConnection);
+        FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
         Gson oGson = GsonFactory.getGson();
         Date date1 = new GregorianCalendar(2014, Calendar.JANUARY, 1).getTime();
         Date date2 = new GregorianCalendar(2019, Calendar.DECEMBER, 31).getTime();

@@ -20,7 +20,9 @@ import net.ausiasmarch.setting.ConnectionSettings;
 
 public class Json extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+	private static final long serialVersionUID = 1L;
+
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");

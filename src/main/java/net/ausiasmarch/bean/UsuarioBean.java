@@ -1,9 +1,10 @@
 package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.util.List;
 
 public class UsuarioBean implements BeanInterface {
 
@@ -100,9 +101,84 @@ public class UsuarioBean implements BeanInterface {
 	}
 
     @Override
-    public ProductoBean fill(ResultSet oResultSet) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UsuarioBean fill(ResultSet oResultSet) throws SQLException {
+    	 this.setId(oResultSet.getInt("id"));
+    	 this.setDni(oResultSet.getString("dni"));
+    	 this.setNombre(oResultSet.getString("nombre"));
+         this.setApellido1(oResultSet.getString("apellido1"));
+         this.setApellido2(oResultSet.getString("apellido2"));
+         this.setEmail(oResultSet.getString("email"));
+         this.setLogin(oResultSet.getString("login"));
+         this.setPassword(oResultSet.getString("password"));
+         return this;
     }
+
+	@Override
+	public PreparedStatement orderSQL(List<String> orden, PreparedStatement oPreparedStatement) throws SQLException {
+		for (int i = 1; i < orden.size(); i++) {
+    		if (orden.get((i-1)).equalsIgnoreCase("id")) {
+    			oPreparedStatement.setInt(i, 1);
+    		} else if (orden.get((i-1)).equalsIgnoreCase("dni")) {
+    			oPreparedStatement.setInt(i, 2);
+    		} else if (orden.get((i-1)).equalsIgnoreCase("nombre")) {
+    			oPreparedStatement.setInt(i, 3);
+    		} else if (orden.get((i-1)).equalsIgnoreCase("apellido1")) {
+    			oPreparedStatement.setInt(i, 4);
+    		} else if (orden.get((i-1)).equalsIgnoreCase("apellido2")) {
+    			oPreparedStatement.setInt(i, 5);
+    		} else if (orden.get((i-1)).equalsIgnoreCase("email")) {
+    			oPreparedStatement.setInt(i, 6);
+    		} else if (orden.get((i-1)).equalsIgnoreCase("login")) {
+    			oPreparedStatement.setInt(i, 7);
+    		} else if (orden.get((i-1)).equalsIgnoreCase("password")) {
+    			oPreparedStatement.setInt(i, 8);
+    		}
+    		
+    	}
+		return oPreparedStatement;
+	}
+
+	@Override
+	public String getFieldInsert() {
+		return "(dni,nombre,apellido1,apellido2,email,login,password,tipo_usuario_id) VALUES(?,?,?,?,?,?,?,?)";
+	}
+
+	@Override
+	public PreparedStatement setFieldInsert(BeanInterface oBeanParam, PreparedStatement oPreparedStatement)
+			throws SQLException {
+		UsuarioBean oUsuarioBean = (UsuarioBean) oBeanParam;
+        oPreparedStatement.setString(1, oUsuarioBean.getDni());
+        oPreparedStatement.setString(2, oUsuarioBean.getNombre());
+        oPreparedStatement.setString(3, oUsuarioBean.getApellido1());
+        oPreparedStatement.setString(4, oUsuarioBean.getApellido2());
+        oPreparedStatement.setString(5, oUsuarioBean.getEmail());
+        oPreparedStatement.setString(6, oUsuarioBean.getLogin());
+        oPreparedStatement.setString(7, oUsuarioBean.getPassword());
+        oPreparedStatement.setInt(8, oUsuarioBean.getTipo_usuario_id()); 
+		return oPreparedStatement;
+	}
+
+	@Override
+	public String getFieldUpdate() {
+		// TODO Auto-generated method stub
+		return "dni = ?, nombre = ?, apellido1 = ?, apellido2 = ?, email = ?, login = ?, password = ?, tipo_usuario_id = ?";
+	}
+
+	@Override
+	public PreparedStatement setFieldUpdate(BeanInterface oBeanParam, PreparedStatement oPreparedStatement)
+			throws SQLException {
+		UsuarioBean oUsuarioBean = (UsuarioBean) oBeanParam;
+        oPreparedStatement.setString(1, oUsuarioBean.getDni());
+        oPreparedStatement.setString(2, oUsuarioBean.getNombre());
+        oPreparedStatement.setString(3, oUsuarioBean.getApellido1());
+        oPreparedStatement.setString(4, oUsuarioBean.getApellido2());
+        oPreparedStatement.setString(5, oUsuarioBean.getEmail());
+        oPreparedStatement.setString(6, oUsuarioBean.getLogin());
+        oPreparedStatement.setString(7, oUsuarioBean.getPassword());
+        oPreparedStatement.setInt(8, oUsuarioBean.getTipo_usuario_id());
+        oPreparedStatement.setInt(9, oUsuarioBean.getId());		
+        return oPreparedStatement;
+	}
 
     
 

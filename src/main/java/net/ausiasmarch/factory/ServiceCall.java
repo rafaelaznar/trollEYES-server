@@ -1,8 +1,6 @@
 package net.ausiasmarch.factory;
 
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
-
 import net.ausiasmarch.service.CarritoService;
 import net.ausiasmarch.service.CompraService;
 import net.ausiasmarch.service.FacturaService;
@@ -10,7 +8,6 @@ import net.ausiasmarch.service.ProductoService;
 import net.ausiasmarch.service.TipoProductoService;
 import net.ausiasmarch.service.TipoUsuarioService;
 import net.ausiasmarch.service.UsuarioService;
-import net.ausiasmarch.setting.ConfigurationSettings;
 
 public class ServiceCall {
 
