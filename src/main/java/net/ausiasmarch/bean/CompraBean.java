@@ -1,6 +1,7 @@
 package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
+import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,7 +53,7 @@ public class CompraBean implements BeanInterface {
 	}
 
     @Override
-    public CompraBean fill(ResultSet oResultSet) throws SQLException {
+    public CompraBean fill(ResultSet oResultSet,Connection oConnection, int spread) throws SQLException {
     	this.setId(oResultSet.getInt("id"));
     	this.setCantidad(oResultSet.getInt("cantidad"));    
 

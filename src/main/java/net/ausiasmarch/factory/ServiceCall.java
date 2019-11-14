@@ -135,7 +135,7 @@ public class ServiceCall {
                    
             }
         }  
-        if (ob.equalsIgnoreCase("tipoproducto")) {
+        if (ob.equalsIgnoreCase("tipo_producto")) {
         	TipoProductoService oTipoProductoService = new TipoProductoService(oRequest);
             switch (op) {
                 case "get":
@@ -159,11 +159,14 @@ public class ServiceCall {
                 case "remove":
                     strResult = oTipoProductoService.remove();
                     break;
+                case "fill":
+                    strResult = oTipoProductoService.fill();
+                    break;
               
                    
             }
         }  
-        if (ob.equalsIgnoreCase("tipousuario")) {
+        if (ob.equalsIgnoreCase("tipo_usuario")) {
         	TipoUsuarioService oTipoUsuarioService = new TipoUsuarioService(oRequest);
             switch (op) {
                 case "get":

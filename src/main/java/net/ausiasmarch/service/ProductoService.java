@@ -26,7 +26,7 @@ public class ProductoService extends GenericService implements ServiceInterface 
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		ProductoDao oProductoDao = new ProductoDao(oConnection, ob);
+		ProductoDao oProductoDao = new ProductoDao(oConnection);
 		Gson oGson = GsonFactory.getGson();
 		int numProd = Integer.parseInt(oRequest.getParameter("number"));
 		for (int i = 0; i < numProd; i++) {

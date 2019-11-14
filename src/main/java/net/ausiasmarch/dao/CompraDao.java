@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 public class CompraDao extends GenericDao implements DaoInterface {
 
-    public CompraDao(Connection oConnection, String ob) {
-		super(oConnection, ob);
+    public CompraDao(Connection oConnection) {
+		super(oConnection, "compra");
 	}
 }

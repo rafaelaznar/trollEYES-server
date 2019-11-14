@@ -64,7 +64,7 @@ public class UsuarioService extends GenericService{
 		ConnectionInterface oConnectionImplementation = ConnectionFactory
 				.getConnection(ConnectionSettings.connectionPool);
 		Connection oConnection = oConnectionImplementation.newConnection();
-		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection, ob);
+		UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
 		Gson oGson = GsonFactory.getGson();
 		int numUsuario = Integer.parseInt(oRequest.getParameter("number"));
 		for (int i = 0; i < numUsuario; i++) {

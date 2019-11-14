@@ -1,6 +1,7 @@
 package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class TipoProductoBean implements BeanInterface {
 	}
 
     @Override
-    public TipoProductoBean fill(ResultSet oResultSet) throws SQLException {
+    public TipoProductoBean fill(ResultSet oResultSet,Connection oConnection, int spread) throws SQLException {
     	 this.setId(oResultSet.getInt("id"));
          this.setDescripcion(oResultSet.getString("descripcion"));
          return this;
@@ -53,7 +54,7 @@ public class TipoProductoBean implements BeanInterface {
 
 	@Override
 	public String getFieldInsert() {
-		return "tipo_producto (descripcion) VALUES(?)";
+		return " (descripcion) VALUES(?)";
 	}
 
 	@Override

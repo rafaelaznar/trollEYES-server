@@ -14,22 +14,22 @@ public class DaoFactory {
         DaoInterface oDao = null;
         switch (ob) {
             case "producto":
-                oDao = new ProductoDao(oConnection, ob);
+                oDao = new ProductoDao(oConnection);
                 break;
             case "compra":
-                oDao = new CompraDao(oConnection, ob);
+                oDao = new CompraDao(oConnection);
                 break;
             case "factura":
-                oDao = new FacturaDao(oConnection, ob);
+                oDao = new FacturaDao(oConnection);
                 break;
             case "tipoproducto":
-                oDao = new TipoProductoDao(oConnection, ob);
+                oDao = new TipoProductoDao(oConnection);
                 break;
             case "tipousuario":
-                oDao = new TipoUsuarioDao(oConnection, ob);
+                oDao = new TipoUsuarioDao(oConnection);
                 break;
             case "usuario":
-                oDao = new UsuarioDao(oConnection, ob);
+                oDao = new UsuarioDao(oConnection);
                 break;
         }
         return oDao ;

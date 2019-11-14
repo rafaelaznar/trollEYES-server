@@ -78,7 +78,7 @@ public class Json extends HttpServlet {
                         out.print(ex);
                         ex.printStackTrace();
                     } else {
-                        ResponseBean oResponseBean = new ResponseBean(500, "BlogBuster ERROR: Please contact your administrator");
+                        ResponseBean oResponseBean = new ResponseBean(500, "Trolleyes ERROR: Please contact your administrator");
                         Gson oGson = new Gson();
                         out.print(oGson.toJson(oResponseBean));
                     }

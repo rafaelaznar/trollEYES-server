@@ -1,6 +1,7 @@
 package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
+import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,7 +55,7 @@ public class FacturaBean implements BeanInterface {
 	}
 
     @Override
-    public FacturaBean fill(ResultSet oResultSet) throws SQLException {
+    public FacturaBean fill(ResultSet oResultSet,Connection oConnection, int spread) throws SQLException {
     	 this.setId(oResultSet.getInt("id"));
          this.setFecha(oResultSet.getDate("fecha"));
          this.setIva(oResultSet.getInt("iva"));

@@ -23,10 +23,10 @@ public class BeanFactory {
             case "factura":
             	oBean = new FacturaBean();
             	break;
-            case "tipoproducto":
+            case "tipo_producto":
             	oBean = new TipoProductoBean();
             	break;
-            case "tipousuario":
+            case "tipo_usuario":
             	oBean = new TipoUsuarioBean();
             	break;
             case "usuario":

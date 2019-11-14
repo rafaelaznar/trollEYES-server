@@ -25,7 +25,7 @@ public class FacturaService extends GenericService {
         ConnectionInterface oConnectionImplementation = ConnectionFactory
                 .getConnection(ConnectionSettings.connectionPool);
         Connection oConnection = oConnectionImplementation.newConnection();
-        FacturaDao oFacturaDao = new FacturaDao(oConnection, ob);
+        FacturaDao oFacturaDao = new FacturaDao(oConnection);
         Gson oGson = GsonFactory.getGson();
         Date date1 = new GregorianCalendar(2014, Calendar.JANUARY, 1).getTime();
         Date date2 = new GregorianCalendar(2019, Calendar.DECEMBER, 31).getTime();

@@ -25,7 +25,7 @@ public class CompraService extends GenericService {
         ConnectionInterface oConnectionImplementation = ConnectionFactory
                 .getConnection(ConnectionSettings.connectionPool);
         Connection oConnection = oConnectionImplementation.newConnection();
-        CompraDao oCompraDao = new CompraDao(oConnection, ob);
+        CompraDao oCompraDao = new CompraDao(oConnection);
         Gson oGson = GsonFactory.getGson();
 		int numCompra = Integer.parseInt(oRequest.getParameter("number"));
 		for (int i = 0; i < numCompra; i++) {
