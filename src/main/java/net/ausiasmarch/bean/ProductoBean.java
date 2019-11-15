@@ -2,7 +2,6 @@ package net.ausiasmarch.bean;
 
 import com.google.gson.annotations.Expose;
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -94,6 +93,7 @@ public class ProductoBean implements BeanInterface {
         this.tipo_producto_obj = tipo_producto_obj;
     }
 
+    @Override
     public ProductoBean fill(ResultSet oResultSet, Connection oConnection, int spread) throws SQLException {
         this.setId(oResultSet.getInt("id"));
         this.setCodigo(oResultSet.getString("codigo"));
@@ -110,7 +110,6 @@ public class ProductoBean implements BeanInterface {
             oTipoProductoBean = (TipoProductoBean) oTipoProductoDao.get(this.tipo_producto_id);
             this.tipo_producto_obj = oTipoProductoBean;
         }
-
         return this;
     }
 
@@ -139,7 +138,7 @@ public class ProductoBean implements BeanInterface {
 
     @Override
     public String getFieldInsert() {
-        return "(codigo,existencias,precio,imagen,descripcion,tipo_producto_id) VALUES(?,?,?,?,?,?)";
+        return " (codigo,existencias,precio,imagen,descripcion,tipo_producto_id) VALUES(?,?,?,?,?,?)";
     }
 
     @Override
@@ -156,21 +155,20 @@ public class ProductoBean implements BeanInterface {
 
     @Override
     public String getFieldUpdate() {
-        return "codigo = ?, existencias = ?, precio = ?, imagen = ?, descripcion = ?, tipo_producto_id = ?";
+        return " (codigo,existencias,precio,imagen,descripcion,tipo_producto_id) VALUES(?,?,?,?,?,?)";
     }
 
     @Override
     public PreparedStatement setFieldUpdate(BeanInterface oBeanParam, PreparedStatement oPreparedStatement) throws SQLException {
-        ProductoBean oProductoBean = (ProductoBean) oBeanParam;        
+        ProductoBean oProductoBean = (ProductoBean) oBeanParam;
         oPreparedStatement.setString(1, oProductoBean.getCodigo());
         oPreparedStatement.setInt(2, oProductoBean.getExistencias());
         oPreparedStatement.setDouble(3, oProductoBean.getPrecio());
         oPreparedStatement.setString(4, oProductoBean.getImagen());
         oPreparedStatement.setString(5, oProductoBean.getDescripcion());
         oPreparedStatement.setInt(6, oProductoBean.getTipo_producto_id());
-        oPreparedStatement.setInt(7, oProductoBean.getId());        
+        oPreparedStatement.setInt(7, oProductoBean.getId());
         return oPreparedStatement;
-
     }
 
 }

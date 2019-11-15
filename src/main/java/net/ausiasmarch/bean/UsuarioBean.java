@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import net.ausiasmarch.dao.TipoUsuarioDao;
 
 public class UsuarioBean implements BeanInterface {
 
@@ -24,8 +25,18 @@ public class UsuarioBean implements BeanInterface {
     @Expose
     private String login;
     private String password;
-    @Expose
+    @Expose(serialize = false)
     private Integer tipo_usuario_id;
+    @Expose(deserialize = false)
+    private TipoUsuarioBean tipo_usuario_obj;
+
+    public UsuarioBean() {
+    }
+
+    public UsuarioBean(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 
     @Override
     public Integer getId() {
@@ -101,6 +112,14 @@ public class UsuarioBean implements BeanInterface {
         this.tipo_usuario_id = tipo_usuario_id;
     }
 
+    public TipoUsuarioBean getTipo_usuario_obj() {
+        return tipo_usuario_obj;
+    }
+
+    public void setTipo_usuario_obj(TipoUsuarioBean tipo_usuario_obj) {
+        this.tipo_usuario_obj = tipo_usuario_obj;
+    }
+
     @Override
     public UsuarioBean fill(ResultSet oResultSet, Connection oConnection, int spread) throws SQLException {
         this.setId(oResultSet.getInt("id"));
@@ -111,6 +130,15 @@ public class UsuarioBean implements BeanInterface {
         this.setEmail(oResultSet.getString("email"));
         this.setLogin(oResultSet.getString("login"));
         this.setPassword(oResultSet.getString("password"));
+        this.setTipo_usuario_id(oResultSet.getInt("tipo_usuario_id"));
+
+        if (spread > 0) {
+            spread--;
+            TipoUsuarioDao oTipoUsuarioDao = new TipoUsuarioDao(oConnection);
+            TipoUsuarioBean oTipoUsuarioBean = new TipoUsuarioBean();
+            oTipoUsuarioBean = (TipoUsuarioBean) oTipoUsuarioDao.get(this.tipo_usuario_id);
+            this.tipo_usuario_obj = oTipoUsuarioBean;
+        }
         return this;
     }
 
@@ -131,17 +159,14 @@ public class UsuarioBean implements BeanInterface {
                 oPreparedStatement.setInt(i, 6);
             } else if (orden.get((i - 1)).equalsIgnoreCase("login")) {
                 oPreparedStatement.setInt(i, 7);
-            } else if (orden.get((i - 1)).equalsIgnoreCase("password")) {
-                oPreparedStatement.setInt(i, 8);
             }
-
         }
         return oPreparedStatement;
     }
 
     @Override
     public String getFieldInsert() {
-        return "(dni,nombre,apellido1,apellido2,email,login,password,tipo_usuario_id) VALUES(?,?,?,?,?,?,?,?)";
+        return " (dni,nombre,apellido1,apellido2,email,login,password,tipo_usuario_id) VALUES(?,?,?,?,?,?,?,?)";
     }
 
     @Override
@@ -161,8 +186,7 @@ public class UsuarioBean implements BeanInterface {
 
     @Override
     public String getFieldUpdate() {
-        // TODO Auto-generated method stub
-        return "dni = ?, nombre = ?, apellido1 = ?, apellido2 = ?, email = ?, login = ?, password = ?, tipo_usuario_id = ?";
+        return " (dni,nombre,apellido1,apellido2,email,login,password,tipo_usuario_id) VALUES(?,?,?,?,?,?,?,?)";
     }
 
     @Override
