@@ -20,9 +20,7 @@ import net.ausiasmarch.setting.ConnectionSettings;
 
 public class Json extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -78,7 +76,7 @@ public class Json extends HttpServlet {
                         out.print(ex);
                         ex.printStackTrace();
                     } else {
-                        ResponseBean oResponseBean = new ResponseBean(500, "Trolleyes ERROR: Please contact your administrator");
+                        ResponseBean oResponseBean = new ResponseBean(500, "BlogBuster ERROR: Please contact your administrator");
                         Gson oGson = new Gson();
                         out.print(oGson.toJson(oResponseBean));
                     }

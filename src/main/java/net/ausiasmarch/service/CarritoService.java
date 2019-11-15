@@ -27,8 +27,7 @@ public class CarritoService {
         Gson oGson = GsonFactory.getGson();
         try {
             HttpSession oSession = oRequest.getSession();
-            @SuppressWarnings("unchecked")
-			ArrayList<ItemBean> alCarrito = (ArrayList<ItemBean>) oSession.getAttribute("carrito");
+            ArrayList<ItemBean> alCarrito = (ArrayList<ItemBean>) oSession.getAttribute("carrito");
             if (alCarrito == null) {
                 alCarrito = new ArrayList<ItemBean>();
             }
@@ -53,8 +52,7 @@ public class CarritoService {
         Gson oGson = GsonFactory.getGson();
         try {
             HttpSession oSession = oRequest.getSession();
-            @SuppressWarnings("unchecked")
-			ArrayList<ItemBean> alCarrito = (ArrayList<ItemBean>) oSession.getAttribute("carrito");
+            ArrayList<ItemBean> alCarrito = (ArrayList<ItemBean>) oSession.getAttribute("carrito");
             if (alCarrito == null) {
                 return oGson.toJson(new ResponseBean(200, "OK"));
             }
@@ -83,8 +81,7 @@ public class CarritoService {
         Gson oGson = GsonFactory.getGson();
         try {
             HttpSession oSession = oRequest.getSession();
-            @SuppressWarnings("unchecked")
-			ArrayList<ItemBean> alCarrito = (ArrayList<ItemBean>) oSession.getAttribute("carrito");
+            ArrayList<ItemBean> alCarrito = (ArrayList<ItemBean>) oSession.getAttribute("carrito");
             return "{\"status\":200,\"message\":" + oGson.toJson(alCarrito) + "}";
         } catch (Exception ex) {
             return oGson.toJson(new ResponseBean(500, ex.getMessage()));
