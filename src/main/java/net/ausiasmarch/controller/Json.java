@@ -1,4 +1,3 @@
-
 package net.ausiasmarch.controller;
 
 import com.google.gson.Gson;
@@ -20,9 +19,9 @@ import net.ausiasmarch.setting.ConnectionSettings;
 
 public class Json extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -35,7 +34,8 @@ public class Json extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
                 out.println("<!DOCTYPE html>");
-                out.println("<html><head><title>TrollEyes</title></head><body>");
+                out.println("<html><head><title>TrollEyes</title></head>");
+                out.println("<body style=\"background: url(trolleyes400.png) no-repeat center center fixed;\">");
                 out.println("<h1>Bienvenidos al servidor WEB TrollEyes</h1>");
                 ConnectionInterface oConnectionImplementation = null;
                 Connection oConnection = null;
