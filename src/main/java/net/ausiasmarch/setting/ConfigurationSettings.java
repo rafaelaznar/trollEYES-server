@@ -8,4 +8,7 @@ public class ConfigurationSettings {
 
 	public static final EnvironmentConstans environment = EnvironmentConstans.Debug;
 
+        public static final int spread=2;
+        
+        
 }
