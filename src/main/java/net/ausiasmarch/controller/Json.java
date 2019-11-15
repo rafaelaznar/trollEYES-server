@@ -34,7 +34,7 @@ public class Json extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
                 out.println("<!DOCTYPE html>");
-                out.println("<html><head><title>TrollEyes</title></head>");
+                out.println("<html><head><title>TrollEyes</title><link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\" /></head>");
                 out.println("<body style=\"background: url(trolleyes400.png) no-repeat center center fixed;\">");
                 out.println("<h1>Bienvenidos al servidor WEB TrollEyes</h1>");
                 ConnectionInterface oConnectionImplementation = null;
