@@ -1,3 +1,4 @@
+
 package net.ausiasmarch.service;
 
 public interface ServiceInterface {
