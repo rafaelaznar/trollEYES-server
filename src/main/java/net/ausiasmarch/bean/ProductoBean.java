@@ -161,13 +161,14 @@ public class ProductoBean implements BeanInterface {
 
     @Override
     public PreparedStatement setFieldUpdate(BeanInterface oBeanParam, PreparedStatement oPreparedStatement) throws SQLException {
-        ProductoBean oProductoBean = (ProductoBean) oBeanParam;
+        ProductoBean oProductoBean = (ProductoBean) oBeanParam;        
         oPreparedStatement.setString(1, oProductoBean.getCodigo());
         oPreparedStatement.setInt(2, oProductoBean.getExistencias());
         oPreparedStatement.setDouble(3, oProductoBean.getPrecio());
         oPreparedStatement.setString(4, oProductoBean.getImagen());
         oPreparedStatement.setString(5, oProductoBean.getDescripcion());
         oPreparedStatement.setInt(6, oProductoBean.getTipo_producto_id());
+        oPreparedStatement.setInt(7, oProductoBean.getId());        
         return oPreparedStatement;
 
     }
